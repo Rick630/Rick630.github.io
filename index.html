@@ -277,15 +277,15 @@ id tmp = objc_loadWeakRetained(&amp;obj_weak)<span class="comment">;</span>
 objc_autorelease(tmp)<span class="comment">;</span>
 NSLog(@"%@",tmp)<span class="comment">;</span>
 objc_destroyWeak(&amp;obj_weak)<span class="comment">;`</span>
-</code></pre><p>与被赋值时相比，在使用附有__weak修饰符变量的情形下，增加了对objc_loadWeakRetained函数和objc_autorelease函数的调用。这些函数的动作如下：</p>
+</code></pre><p>与被赋值时相比，在使用附有__weak修饰符变量的情形下，增加了对<code>objc_loadWeakRetained</code>函数和<code>objc_autorelease</code>函数的调用。这些函数的动作如下：</p>
 <ol>
-<li><p>objc_loadWeakRetained函数取出附有__weak修饰符变量所引用的对象并retain</p>
+<li><p><code>objc_loadWeakRetained</code>函数取出附有__weak修饰符变量所引用的对象并retain</p>
 </li>
-<li><p>objc_autorelease函数将对象注册到autorelease中。</p>
+<li><p><code>objc_autorelease</code>函数将对象注册到autorelease中。</p>
 </li>
 </ol>
 <p>由此可知，因为附有__weak修饰符变量所引用的对象这样被注册到autorelease中，所以在@autoreleasepool块结束之前都可以放心使用。</p>
-<p>注：OC中有一些类，并不支持ARC，例如NSMachPort类。可以通过allowsWeakReference/retainWeakReference方法来判断是否支持ARC</p>
+<p>注：OC中有一些类，并不支持ARC，例如NSMachPort类。可以通过<code>allowsWeakReference</code>/<code>retainWeakReference</code>方法来判断是否支持ARC</p>
 
       
     </div>

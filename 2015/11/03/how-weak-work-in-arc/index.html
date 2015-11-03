@@ -3,36 +3,37 @@
 <head>
   <meta charset="utf-8">
   
-  <title>BEMCheckBox | Rick’s house</title>
+  <title>__weak如何实现对象值自动设置为nil的 | Rick’s house</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="BEMCheckBox
+  <meta name="description" content="原文：
 
- 
-一个不错的带动画效果的CheckBox
+http://blog.csdn.net/hherima/article/details/38661803?utm_source=tuicool&amp;amp;utm_medium=referral
 
-地址">
+在开始讲解__weak机制之前，先来一些铺垫
+ARC 的实现
+苹果的官方说明中称，ARC是“由编译器进行内存管理”的，但实际上只有编译器是无法完全胜任的，ARC还依赖OC运行时库，也就是说ARC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BEMCheckBox">
-<meta property="og:url" content="http://yoursite.com/2015/11/03/BEMCheckBox/index.html">
+<meta property="og:title" content="__weak如何实现对象值自动设置为nil的">
+<meta property="og:url" content="http://yoursite.com/2015/11/03/how-weak-work-in-arc/index.html">
 <meta property="og:site_name" content="Rick’s house">
-<meta property="og:description" content="BEMCheckBox
+<meta property="og:description" content="原文：
 
- 
-一个不错的带动画效果的CheckBox
+http://blog.csdn.net/hherima/article/details/38661803?utm_source=tuicool&amp;amp;utm_medium=referral
 
-地址">
-<meta property="og:image" content="https://camo.githubusercontent.com/0fe6721e85cc218a04ce229d14ded27cee6377d6/68747470733a2f2f7472617669732d63692e6f72672f426f7269732d456d2f42454d436865636b426f782e737667">
-<meta property="og:image" content="https://camo.githubusercontent.com/9c9d5d09ef2f775cd72d36b455def48b348ee0b7/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f762f42454d436865636b426f782e7376673f7374796c653d666c6174">
-<meta property="og:image" content="https://camo.githubusercontent.com/12238fb7daad2379149633dc9e6fd0d16274046d/687474703a2f2f7331322e706f7374696d672e6f72672f766e32697261686a782f42454d436865636b5f426f782e676966">
-<meta property="og:updated_time" content="2015-11-03T08:30:59.000Z">
+在开始讲解__weak机制之前，先来一些铺垫
+ARC 的实现
+苹果的官方说明中称，ARC是“由编译器进行内存管理”的，但实际上只有编译器是无法完全胜任的，ARC还依赖OC运行时库，也就是说ARC">
+<meta property="og:image" content="http://img0.tuicool.com/fIJJf2.jpg">
+<meta property="og:updated_time" content="2015-11-03T09:21:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BEMCheckBox">
-<meta name="twitter:description" content="BEMCheckBox
+<meta name="twitter:title" content="__weak如何实现对象值自动设置为nil的">
+<meta name="twitter:description" content="原文：
 
- 
-一个不错的带动画效果的CheckBox
+http://blog.csdn.net/hherima/article/details/38661803?utm_source=tuicool&amp;amp;utm_medium=referral
 
-地址">
+在开始讲解__weak机制之前，先来一些铺垫
+ARC 的实现
+苹果的官方说明中称，ARC是“由编译器进行内存管理”的，但实际上只有编译器是无法完全胜任的，ARC还依赖OC运行时库，也就是说ARC">
   
     <link rel="alternative" href="/atom.xml" title="Rick’s house" type="application/atom+xml">
   
@@ -191,11 +192,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-BEMCheckBox" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-how-weak-work-in-arc" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/03/BEMCheckBox/" class="article-date">
-  	<time datetime="2015-11-03T08:26:18.000Z" itemprop="datePublished">2015-11-03</time>
+      <a href="/2015/11/03/how-weak-work-in-arc/" class="article-date">
+  	<time datetime="2015-11-03T09:14:54.000Z" itemprop="datePublished">2015-11-03</time>
 </a>
     </div>
   
@@ -208,7 +209,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      BEMCheckBox
+      __weak如何实现对象值自动设置为nil的
     </h1>
   
 
@@ -217,12 +218,12 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/checkBox/">checkBox</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARC/">ARC</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/github源码记录/">github源码记录</a>
+	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
 	</div>
 
 
@@ -232,12 +233,92 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>BEMCheckBox</strong></p>
-<hr>
-<p><img src="https://camo.githubusercontent.com/0fe6721e85cc218a04ce229d14ded27cee6377d6/68747470733a2f2f7472617669732d63692e6f72672f426f7269732d456d2f42454d436865636b426f782e737667" alt="build passing"> <img src="https://camo.githubusercontent.com/9c9d5d09ef2f775cd72d36b455def48b348ee0b7/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f762f42454d436865636b426f782e7376673f7374796c653d666c6174" alt="Version"></p>
-<p>一个不错的带动画效果的CheckBox</p>
-<p><img src="https://camo.githubusercontent.com/12238fb7daad2379149633dc9e6fd0d16274046d/687474703a2f2f7331322e706f7374696d672e6f72672f766e32697261686a782f42454d436865636b5f426f782e676966" alt="gif"></p>
-<p><a href="https://github.com/Boris-Em/BEMCheckBox" target="_blank" rel="external">地址</a></p>
+        <p>原文：</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/hherima/article/details/38661803?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://blog.csdn.net/hherima/article/details/38661803?utm_source=tuicool&amp;utm_medium=referral</a></p>
+</blockquote>
+<p>在开始讲解__weak机制之前，先来一些铺垫</p>
+<p><strong>ARC 的实现</strong></p>
+<p>苹果的官方说明中称，ARC是“由编译器进行内存管理”的，但实际上只有编译器是无法完全胜任的，ARC还依赖OC运行时库，也就是说ARC是通过以下工具、库来实现的：</p>
+<ul>
+<li><p>clang (LLVM 编译器)3.0以上</p>
+</li>
+<li><p>objc4 OC运行时库 493.9以上</p>
+</li>
+</ul>
+<p>如果按照苹果的说明，仅仅是编译器管理内存的，那么__weak修饰符也可以在iOS 4中使用</p>
+<p><strong>__weak 修饰符</strong></p>
+<p>就像我们知道的那样__weak修饰符提供了如同魔法般的公能。</p>
+<ul>
+<li><p>若使用__weak修饰符的变量引用对象被废弃时，则将nil赋值给该变量</p>
+</li>
+<li><p>使用附有__weak修饰符的变量，就是使用注册到autoreleasepool的对象。</p>
+</li>
+</ul>
+<p>我们来看看它的实现：</p>
+<p><code>{    
+    id __weak obj_weak = obj;//obj已被赋值，并且是strong类型的
+}</code></p>
+<p><code>/*编译器的模拟代码*/
+id obj_weak;
+objc_initWeak(&amp;obj_weak,obj);//初始化附有__weak修饰符的变量
+objc_destroyWeak(&amp;obj_weak);//释放该变量</code></p>
+<p>其中objc_initWeak objc_destroyWeak都是调用了objc_storeWeak函数，所以，上面的代码可以转化为下面的代码</p>
+<p><code>id obj_weak;
+obj_weak = 0;
+objc_storeWeak(&amp;obj_weak,obj);
+objc_storeWeak(&amp;obj,0);
+objc_storeWeak函数以把obj的地址作为键值，obj_weak的地址作为值存放到weak表（weak是一个hash表）中。</code></p>
+<p><img src="http://img0.tuicool.com/fIJJf2.jpg" alt=""></p>
+<p>释放对象时，废弃对象的同时，程序的动作是怎样的呢？对象通过objc_release释放。</p>
+<ol>
+<li><p>objc_release</p>
+</li>
+<li><p>因为引用计数为0所以执行dealloc</p>
+</li>
+<li><p>_objc_rootDealloc</p>
+</li>
+<li><p>object_dispose</p>
+</li>
+<li><p>objc_destructInstance</p>
+</li>
+<li><p>objc_clear_deallocating</p>
+</li>
+</ol>
+<p>而，调用objc_clear_deallocating的动作如下：</p>
+<ol>
+<li><p>从weak表中获取废弃对象的地址为键值的记录。</p>
+</li>
+<li><p>将包含在记录中的所有附有__weak修饰符变量的地址，赋值为nil</p>
+</li>
+<li><p>从weak表中删除记录</p>
+</li>
+<li><p>从引用计数表中删除废弃对象的地址作为键值的记录</p>
+</li>
+</ol>
+<p>根据以上步骤，前面说的如果附有__weak修饰符的变量所引用的对象被废弃，则将nil赋值给这个变量，这个功能即被实现。</p>
+<p><strong>weak的第二个功能，使用</strong>weak 修饰符的变量，即是使用注册到autoreleasepool中的对象。</p>
+<p><code>{
+    id __weak obj_weak = obj;//obj已被赋值，并且是strong类型的
+    NSLog(@&quot;%@&quot;,obj_weak);
+}</code></p>
+<p>该代码转化为如下形式：</p>
+<p><code>/*编译器的模拟代码*/
+id obj_weak;
+objc_initweak(&amp;obj_weak,obj);
+id tmp = objc_loadWeakRetained(&amp;obj_weak);
+objc_autorelease(tmp);
+NSLog(@&quot;%@&quot;,tmp);
+objc_destroyWeak(&amp;obj_weak);</code></p>
+<p>与被赋值时相比，在使用附有__weak修饰符变量的情形下，增加了对objc_loadWeakRetained函数和objc_autorelease函数的调用。这些函数的动作如下：</p>
+<ol>
+<li><p>objc_loadWeakRetained函数取出附有__weak修饰符变量所引用的对象并retain</p>
+</li>
+<li><p>objc_autorelease函数将对象注册到autorelease中。</p>
+</li>
+</ol>
+<p>由此可知，因为附有__weak修饰符变量所引用的对象这样被注册到autorelease中，所以在@autoreleasepool块结束之前都可以放心使用。</p>
+<p>注：OC中有一些类，并不支持ARC，例如NSMachPort类。可以通过allowsWeakReference/retainWeakReference方法来判断是否支持ARC</p>
 
       
     </div>
@@ -247,18 +328,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/11/03/ios-model-framework-benchmark/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          (转)iOS JSON 模型转换库评测
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/11/02/CoolNavi/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CoolNavi</div>
+    <a href="/2015/11/03/ios-model-framework-benchmark/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">(转)iOS JSON 模型转换库评测</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -287,7 +359,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="BEMCheckBox" data-title="BEMCheckBox" data-url="http://yoursite.com/2015/11/03/BEMCheckBox/"></div>
+	<div class="ds-thread" data-thread-key="how-weak-work-in-arc" data-title="__weak如何实现对象值自动设置为nil的" data-url="http://yoursite.com/2015/11/03/how-weak-work-in-arc/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

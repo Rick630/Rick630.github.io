@@ -230,7 +230,7 @@
 <span class="keyword">id</span> obj_weak;
 objc_initWeak(&amp;obj_weak,obj);<span class="comment">//初始化附有__weak修饰符的变量</span>
 objc_destroyWeak(&amp;obj_weak);<span class="comment">//释放该变量</span>
-</code></pre><p>其中<code>objc_initWeak</code> <code>objc_destroyWeak</code>都是调用了objc_storeWeak函数，所以，上面的代码可以转化为下面的代码</p>
+</code></pre><p>其中<code>objc_initWeak</code> <code>objc_destroyWeak</code>都是调用了<code>objc_storeWeak</code>函数，所以，上面的代码可以转化为下面的代码</p>
 <pre><code>id obj_weak<span class="comment">;</span>
 obj_weak = 0<span class="comment">;</span>
 objc_storeWeak(&amp;obj_weak,obj)<span class="comment">;</span>

@@ -24,7 +24,7 @@ http://blog.csdn.net/hherima/article/details/38661803?utm_source=tuicool&amp;amp
 ARC 的实现
 苹果的官方说明中称，ARC是“由编译器进行内存管理”的，但实际上只有编译器是无法完全胜任的，ARC还依赖OC运行时库，也就是说ARC">
 <meta property="og:image" content="http://img.blog.csdn.net/20140818162915585">
-<meta property="og:updated_time" content="2015-11-03T09:33:11.000Z">
+<meta property="og:updated_time" content="2015-11-03T10:51:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="__weak如何实现对象值自动设置为nil的">
 <meta name="twitter:description" content="原文：
@@ -263,7 +263,7 @@ ARC 的实现
 <span class="keyword">id</span> obj_weak;
 objc_initWeak(&amp;obj_weak,obj);<span class="comment">//初始化附有__weak修饰符的变量</span>
 objc_destroyWeak(&amp;obj_weak);<span class="comment">//释放该变量</span>
-</code></pre><p>其中objc_initWeak objc_destroyWeak都是调用了objc_storeWeak函数，所以，上面的代码可以转化为下面的代码</p>
+</code></pre><p>其中<code>objc_initWeak</code> <code>objc_destroyWeak</code>都是调用了objc_storeWeak函数，所以，上面的代码可以转化为下面的代码</p>
 <pre><code>id obj_weak<span class="comment">;</span>
 obj_weak = 0<span class="comment">;</span>
 objc_storeWeak(&amp;obj_weak,obj)<span class="comment">;</span>

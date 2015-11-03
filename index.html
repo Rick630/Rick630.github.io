@@ -223,20 +223,20 @@
 </li>
 </ul>
 <p>我们来看看它的实现：</p>
-<p><code>{    
-    id __weak obj_weak = obj;//obj已被赋值，并且是strong类型的
-}</code></p>
-<p><code>/*编译器的模拟代码*/
-id obj_weak;
-objc_initWeak(&amp;obj_weak,obj);//初始化附有__weak修饰符的变量
-objc_destroyWeak(&amp;obj_weak);//释放该变量</code></p>
-<p>其中objc_initWeak objc_destroyWeak都是调用了objc_storeWeak函数，所以，上面的代码可以转化为下面的代码</p>
-<p><code>id obj_weak;
-obj_weak = 0;
-objc_storeWeak(&amp;obj_weak,obj);
-objc_storeWeak(&amp;obj,0);
-objc_storeWeak函数以把obj的地址作为键值，obj_weak的地址作为值存放到weak表（weak是一个hash表）中。</code></p>
-<p><img src="http://img0.tuicool.com/fIJJf2.jpg" alt=""></p>
+<pre><code><span class="keyword">id</span> __<span class="keyword">weak</span> obj_weak = obj;<span class="comment">//obj已被赋值，并且是strong类型的</span>
+
+
+<span class="comment">/*编译器的模拟代码*/</span>
+<span class="keyword">id</span> obj_weak;
+objc_initWeak(&amp;obj_weak,obj);<span class="comment">//初始化附有__weak修饰符的变量</span>
+objc_destroyWeak(&amp;obj_weak);<span class="comment">//释放该变量</span>
+</code></pre><p>其中objc_initWeak objc_destroyWeak都是调用了objc_storeWeak函数，所以，上面的代码可以转化为下面的代码</p>
+<pre><code>id obj_weak<span class="comment">;</span>
+obj_weak = 0<span class="comment">;</span>
+objc_storeWeak(&amp;obj_weak,obj)<span class="comment">;</span>
+objc_storeWeak(&amp;obj,0)<span class="comment">;</span>
+objc_storeWeak函数以把obj的地址作为键值，obj_weak的地址作为值存放到weak表（weak是一个hash表）中。`
+</code></pre><p><img src="http://img0.tuicool.com/fIJJf2.jpg" alt=""></p>
 <p>释放对象时，废弃对象的同时，程序的动作是怎样的呢？对象通过objc_release释放。</p>
 <ol>
 <li><p>objc_release</p>
@@ -265,19 +265,19 @@ objc_storeWeak函数以把obj的地址作为键值，obj_weak的地址作为值�
 </ol>
 <p>根据以上步骤，前面说的如果附有__weak修饰符的变量所引用的对象被废弃，则将nil赋值给这个变量，这个功能即被实现。</p>
 <p><strong>weak的第二个功能，使用</strong>weak 修饰符的变量，即是使用注册到autoreleasepool中的对象。</p>
-<p><code>{
-    id __weak obj_weak = obj;//obj已被赋值，并且是strong类型的
-    NSLog(@&quot;%@&quot;,obj_weak);
-}</code></p>
-<p>该代码转化为如下形式：</p>
-<p><code>/*编译器的模拟代码*/
-id obj_weak;
-objc_initweak(&amp;obj_weak,obj);
-id tmp = objc_loadWeakRetained(&amp;obj_weak);
-objc_autorelease(tmp);
-NSLog(@&quot;%@&quot;,tmp);
-objc_destroyWeak(&amp;obj_weak);</code></p>
-<p>与被赋值时相比，在使用附有__weak修饰符变量的情形下，增加了对objc_loadWeakRetained函数和objc_autorelease函数的调用。这些函数的动作如下：</p>
+<pre><code>{
+    <span class="keyword">id</span> __<span class="keyword">weak</span> obj_weak = obj;<span class="comment">//obj已被赋值，并且是strong类型的</span>
+   <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,obj_weak);
+}
+</code></pre><p>该代码转化为如下形式：</p>
+<pre><code>/*编译器的模拟代码*/
+id obj_weak<span class="comment">;</span>
+objc_initweak(&amp;obj_weak,obj)<span class="comment">;</span>
+id tmp = objc_loadWeakRetained(&amp;obj_weak)<span class="comment">;</span>
+objc_autorelease(tmp)<span class="comment">;</span>
+NSLog(@"%@",tmp)<span class="comment">;</span>
+objc_destroyWeak(&amp;obj_weak)<span class="comment">;`</span>
+</code></pre><p>与被赋值时相比，在使用附有__weak修饰符变量的情形下，增加了对objc_loadWeakRetained函数和objc_autorelease函数的调用。这些函数的动作如下：</p>
 <ol>
 <li><p>objc_loadWeakRetained函数取出附有__weak修饰符变量所引用的对象并retain</p>
 </li>

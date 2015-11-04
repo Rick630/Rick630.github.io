@@ -108,7 +108,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ARC/" style="font-size: 10px;">ARC</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 20px;">面试</a>
+						<a href="/tags/ARC/" style="font-size: 20px;">ARC</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/循环引用/" style="font-size: 10px;">循环引用</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 20px;">面试</a>
 					</div>
 				</section>
 				
@@ -173,6 +173,68 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-nstimer-not-release" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/04/nstimer-not-release/" class="article-date">
+  	<time datetime="2015-11-04T05:52:11.000Z" itemprop="datePublished">2015-11-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/04/nstimer-not-release/">(坑)NSTimer会持有对象导致循环引用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> <span class="string">FtKeepAlive :</span> NSObject</span><br><span class="line">&#123;</span><br><span class="line">    NSTimer* timer; <span class="comment">// 发送心跳timer</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实现文件</span></span><br><span class="line">timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1</span> <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(someAction) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
+<p>这里的timer会持有self</p>
+<p>在不需要timer的时候需要调用</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[timer invalidate]</span><span class="comment">;</span></span><br><span class="line"><span class="setting">timer = <span class="value">nil;</span></span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARC/">ARC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/循环引用/">循环引用</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-ios-kaopu2" class="article article-type-post" itemscope itemprop="blogPost">
   

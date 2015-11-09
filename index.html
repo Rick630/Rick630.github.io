@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ARC/" style="font-size: 20px;">ARC</a> <a href="/tags/Objc/" style="font-size: 10px;">Objc</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/循环引用/" style="font-size: 10px;">循环引用</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 20px;">面试</a>
+						<a href="/tags/ARC/" style="font-size: 20px;">ARC</a> <a href="/tags/NSUrlProtocol/" style="font-size: 10px;">NSUrlProtocol</a> <a href="/tags/Objc/" style="font-size: 10px;">Objc</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/ios-dns/" style="font-size: 10px;">ios-dns</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/循环引用/" style="font-size: 10px;">循环引用</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 20px;">面试</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,147 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-ios-DNS" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/09/ios-DNS/" class="article-date">
+  	<time datetime="2015-11-09T07:07:15.000Z" itemprop="datePublished">2015-11-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/09/ios-DNS/">iOS开发之DNS解析</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文</p>
+<blockquote>
+<p><a href="http://www.jianshu.com/p/d945454e3abc">http://www.jianshu.com/p/d945454e3abc</a></p>
+</blockquote>
+<ul>
+<li><p>res_query方法</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ios-dns/">ios-dns</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/09/ios-DNS/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-ios-nsurlprotocol" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/09/ios-nsurlprotocol/" class="article-date">
+  	<time datetime="2015-11-09T06:55:40.000Z" itemprop="datePublished">2015-11-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/09/ios-nsurlprotocol/">NSUrlProtocol使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在研究如何解决DNS广告时看到这篇文章，虽然这方法对DNS牛皮癣还是不管用，但是这些特性以后也许会用得上的，marked</p>
+<p>原文</p>
+<blockquote>
+<p><a href="http://www.jianshu.com/p/7c89b8c5482a">http://www.jianshu.com/p/7c89b8c5482a</a></p>
+</blockquote>
+<p>最近在项目里由于电信那边发生dns发生域名劫持，因此需要手动将URL请求的域名重定向到指定的IP地址，但是由于请求可能是通过NSURLConnection,NSURLSession或者AFNetworking等方式，因此要想统一进行处理，一开始是想通过Method Swizzling去hook cfnetworking底层方法，后来发现其实有个更好的方法–NSURLProtocol。</p>
+<h1 id="NSURLProtocol">NSURLProtocol</h1><p>  NSURLProtocol能够让你去重新定义苹果的URL加载系统 (URL Loading System)的行为，URL Loading System里有许多类用于处理URL请求，比如NSURL，NSURLRequest，NSURLConnection和NSURLSession等，当URL Loading System使用NSURLRequest去获取资源的时候，它会创建一个NSURLProtocol子类的实例，你不应该直接实例化一个NSURLProtocol，NSURLProtocol看起来像是一个协议，但其实这是一个类，而且必须使用该类的子类，并且需要被注册。</p>
+<h1 id="使用场景">使用场景</h1><p>  不管你是通过UIWebView, NSURLConnection 或者第三方库 (AFNetworking, MKNetworkKit等)，他们都是基于NSURLConnection或者 NSURLSession实现的，因此你可以通过NSURLProtocol做自定义的操作。</p>
+<ul>
+<li>重定向网络请求</li>
+<li>忽略网络请求，使用本地缓存</li>
+<li>自定义网络请求的返回结果</li>
+<li>一些全局的网络请求设置
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSUrlProtocol/">NSUrlProtocol</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/09/ios-nsurlprotocol/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-Objc-2015" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -813,127 +954,10 @@
 
 
   
-    <article id="post-JZNavigationExtension" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2015/11/02/JZNavigationExtension/" class="article-date">
-  	<time datetime="2015-11-02T07:42:02.000Z" itemprop="datePublished">2015-11-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/02/JZNavigationExtension/">JZNavigationExtension</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#JZNavigationExtension</p>
-<hr>
-<p>“UINavigationController+JZExtension”分类为UINavigationController集成了许多方便的功能点，同时为它打开了一些隐藏功能。</p>
-<p><img src="https://raw.githubusercontent.com/JazysYu/JZNavigationExtension/master/Snapshots/JZNavigationExtensionDemo.gif" alt=""><br><a href="https://github.com/JazysYu/JZNavigationExtension" target="_blank" rel="external">link</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/navigation/">navigation</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/github源码记录/">github源码记录</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-第一篇文章" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/02/第一篇文章/" class="article-date">
-  	<time datetime="2015-11-02T04:46:49.000Z" itemprop="datePublished">2015-11-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/02/第一篇文章/">第一篇文章</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Test</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/随写/">随写</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">

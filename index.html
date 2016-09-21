@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ARC/" style="font-size: 20px;">ARC</a> <a href="/tags/NSUrlProtocol/" style="font-size: 10px;">NSUrlProtocol</a> <a href="/tags/Objc/" style="font-size: 10px;">Objc</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/ios-dns/" style="font-size: 10px;">ios-dns</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/循环引用/" style="font-size: 10px;">循环引用</a> <a href="/tags/插件/" style="font-size: 10px;">插件</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 20px;">面试</a>
+						<a href="/tags/ARC/" style="font-size: 20px;">ARC</a> <a href="/tags/NSUrlProtocol/" style="font-size: 10px;">NSUrlProtocol</a> <a href="/tags/Objc/" style="font-size: 10px;">Objc</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/ios-dns/" style="font-size: 10px;">ios-dns</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/xib/" style="font-size: 10px;">xib</a> <a href="/tags/循环引用/" style="font-size: 10px;">循环引用</a> <a href="/tags/插件/" style="font-size: 10px;">插件</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 20px;">面试</a>
 					</div>
 				</section>
 				
@@ -184,7 +184,7 @@
   
     <div class="article-meta">
       <a href="/2016/09/21/Xcode8_xib_issue/" class="article-date">
-  	<time datetime="2016-09-21T02:49:27.000Z" itemprop="datePublished">2016-09-21</time>
+  	<time datetime="2016-09-21T02:28:11.000Z" itemprop="datePublished">2016-09-21</time>
 </a>
     </div>
   
@@ -193,12 +193,20 @@
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/21/Xcode8_xib_issue/">Xcode8更新xib版本后遇到的frame问题和解决办法</a>
+    </h1>
+  
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>title: Xcode8更新xib版本后遇到的frame问题和解决办法</p>
-<p>date: 2016-09-21 10:28:11</p>
-<p>categories: 技术文章</p>
-<h2 id="tags:_[Xcode8,xib]">tags: [Xcode8,xib]</h2><p>#问题</p>
+        <p>#问题</p>
 <p>更新Xcode8后打开xib都会提示是否更新xib版本</p>
 <p>更新版本后，以前在 <code>awakeFromNib</code> 方法里获取某个 <code>UIView</code> 的fame可能会失效，比如说</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)awakeFromNib &#123;</span><br><span class="line">    [super awakeFromNib]<span class="comment">;</span></span><br><span class="line">    CGFloat raduis = _headImg.frame.size.height/2<span class="comment">;</span></span><br><span class="line">    _headImg.layer.cornerRadius = raduis<span class="comment">;</span></span><br><span class="line">    _headImg.layer.masksToBounds = YES<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -216,7 +224,15 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xcode8/">Xcode8</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xib/">xib</a></li></ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
+	</div>
+
 
       
       <div class="clearfix"></div>

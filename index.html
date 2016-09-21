@@ -180,6 +180,104 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Xcode8_xib_issue" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/21/Xcode8_xib_issue/" class="article-date">
+  	<time datetime="2016-09-21T02:49:27.000Z" itemprop="datePublished">2016-09-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: Xcode8更新xib版本后遇到的frame问题和解决办法</p>
+<p>date: 2016-09-21 10:28:11</p>
+<p>categories: 技术文章</p>
+<h2 id="tags:_[Xcode8,xib]">tags: [Xcode8,xib]</h2><p>#问题</p>
+<p>更新Xcode8后打开xib都会提示是否更新xib版本</p>
+<p>更新版本后，以前在 <code>awakeFromNib</code> 方法里获取某个 <code>UIView</code> 的fame可能会失效，比如说</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)awakeFromNib &#123;</span><br><span class="line">    [super awakeFromNib]<span class="comment">;</span></span><br><span class="line">    CGFloat raduis = _headImg.frame.size.height/2<span class="comment">;</span></span><br><span class="line">    _headImg.layer.cornerRadius = raduis<span class="comment">;</span></span><br><span class="line">    _headImg.layer.masksToBounds = YES<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段设置圆角的代码看上去没任何问题，但是运行后会发现 <code>_headImg</code> 不见了，找了半天之后打断点后发现 <code>_headImg</code> 的bounds竟然是(0, 0, 1000, 1000)</p>
+<p>在SO上查了一下，如果不是Xcode8的bug的话，应该就是苹果修改了xib的life cycle导致的问题</p>
+<p>参考链接</p>
+<p><a href="http://stackoverflow.com/questions/39380128/ios-10-gm-with-xcode-8-gm-causes-views-to-disappear-due-to-roundedcorners-clip" target="_blank" rel="external">http://stackoverflow.com/questions/39380128/ios-10-gm-with-xcode-8-gm-causes-views-to-disappear-due-to-roundedcorners-clip</a></p>
+<p>#解决办法</p>
+<p>如果是一小部分地方受影响的话，那么只需要简单的在获取某个 <code>UIView</code> 的frame前加入一句 <code>[self layoutIfNeeded]</code> 就可以了，但是工程里影响到的类比较多，改动起来比较麻烦话，可以通过hook <code>awakeFromNib</code> 的方法进行解决</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSObject</span> (<span class="title">adaptXocde8</span>)</span></span><br><span class="line">+(<span class="keyword">void</span>)load</span><br><span class="line">&#123;</span><br><span class="line">    Method originalMethod = class_getInstanceMethod([<span class="built_in">NSObject</span> class], <span class="keyword">@selector</span>(awakeFromNib));</span><br><span class="line">    Method swapMethod = class_getInstanceMethod([<span class="built_in">NSObject</span> class], <span class="keyword">@selector</span>(awakeFromNibNew));</span><br><span class="line">    method_exchangeImplementations(originalMethod, swapMethod);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)awakeFromNibNew</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>([<span class="keyword">self</span> respondsToSelector:<span class="keyword">@selector</span>(layoutIfNeeded)])</span><br><span class="line">    &#123;</span><br><span class="line">        [<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(layoutIfNeeded) withObject:<span class="literal">nil</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    [<span class="keyword">self</span> awakeFromNibNew];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-iOS_xib_issue" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/21/iOS_xib_issue/" class="article-date">
+  	<time datetime="2016-09-21T02:27:01.000Z" itemprop="datePublished">2016-09-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>title: iOS10下</p>
+<p>date: 2015-11-04 13:52:11</p>
+<p>categories: 技术文章</p>
+<h2 id="tags:_[ARC,循环引用]">tags: [ARC,循环引用]</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> <span class="string">FtKeepAlive :</span> NSObject</span><br><span class="line">&#123;</span><br><span class="line">    NSTimer* timer; <span class="comment">// 发送心跳timer</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实现文件</span></span><br><span class="line">timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1</span> <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(someAction) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
+<p>这里的timer会持有self</p>
+<p>在不需要timer的时候需要调用</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[timer invalidate]</span><span class="comment">;</span></span><br><span class="line"><span class="setting">timer = <span class="value">nil;</span></span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-ESJsonFormat-Xcode" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -785,149 +883,6 @@
         <p class="article-more-link">
           <a  href="/2015/11/03/how-weak-work-in-arc/#more">more >></a>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-ios-model-framework-benchmark" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/03/ios-model-framework-benchmark/" class="article-date">
-  	<time datetime="2015-11-03T08:40:49.000Z" itemprop="datePublished">2015-11-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/03/ios-model-framework-benchmark/">(转)iOS JSON 模型转换库评测</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原文出自</p>
-<blockquote>
-<p><a href="http://blog.ibireme.com/2015/10/23/ios_model_framework_benchmark/">http://blog.ibireme.com/2015/10/23/ios_model_framework_benchmark/</a></p>
-</blockquote>
-<p>iOS 开发中总会用到各种 JSON 模型转换库，这篇文章将会对常见的几个开源库进行一下评测。评测的内容主要集中在性能、功能、容错性这几个方面。</p>
-<p><strong>评测的对象：</strong></p>
-<p>Manually</p>
-<p>手动进行 JSON/Model 转换，不用任何开源库，可以进行高效、自由的转换，但手写代码非常繁琐，而且容易出错。</p>
-<p>YYModel</p>
-<p>我造的一个新轮子，比较轻量（算上 .h 只有 5 个文件），支持自动的 JSON/Model 转换，支持定义映射过程。API 简洁，功能也比较简单。</p>
-<p>FastEasyMapping</p>
-<p>Yalantis 开发的一个 JSON 模型转换库，可以自定义详细的 Model 映射过程，支持 CoreData。使用者较少。</p>
-<p>JSONModel</p>
-<p>一个 JSON 模型转换库，有着比较简洁的接口。Model 需要继承自 JSONModel。</p>
-<p>Mantle</p>
-<p>Github 官方团队开发的 JSON 模型转换库，Model 需要继承自 MTLModel。功能丰富，文档完善，使用广泛。</p>
-<p>MJExtension</p>
-<p>国内开发者”小码哥”开发的 JSON 模型库，号称性能超过 JSONModel 和 Mantle，使用简单无侵入。国内有大量使用者。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2015/11/03/ios-model-framework-benchmark/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-BEMCheckBox" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/11/03/BEMCheckBox/" class="article-date">
-  	<time datetime="2015-11-03T08:26:18.000Z" itemprop="datePublished">2015-11-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/03/BEMCheckBox/">BEMCheckBox</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>BEMCheckBox</strong></p>
-<hr>
-<p><img src="https://camo.githubusercontent.com/0fe6721e85cc218a04ce229d14ded27cee6377d6/68747470733a2f2f7472617669732d63692e6f72672f426f7269732d456d2f42454d436865636b426f782e737667" alt="build passing"> <img src="https://camo.githubusercontent.com/9c9d5d09ef2f775cd72d36b455def48b348ee0b7/68747470733a2f2f696d672e736869656c64732e696f2f636f636f61706f64732f762f42454d436865636b426f782e7376673f7374796c653d666c6174" alt="Version"></p>
-<p>一个不错的带动画效果的CheckBox</p>
-<p><img src="https://camo.githubusercontent.com/12238fb7daad2379149633dc9e6fd0d16274046d/687474703a2f2f7331322e706f7374696d672e6f72672f766e32697261686a782f42454d436865636b5f426f782e676966" alt="gif"></p>
-<p><a href="https://github.com/Boris-Em/BEMCheckBox" target="_blank" rel="external">地址</a></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/checkBox/">checkBox</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/github源码记录/">github源码记录</a>
-	</div>
-
-
       
       <div class="clearfix"></div>
     </div>

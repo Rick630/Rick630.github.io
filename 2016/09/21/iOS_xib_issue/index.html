@@ -3,25 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mark!jsonmodel转换的一个小插件 | Rick’s house</title>
+  <title>Rick’s house</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一个根据json字符串生成model头文件的小插件，老是搞丢，先mark一下～
-
-github地址">
+  <meta name="description" content="title: iOS10下
+date: 2015-11-04 13:52:11
+categories: 技术文章
+tags: [ARC,循环引用]123456@interface FtKeepAlive : NSObject&amp;#123;    NSTimer* timer; // 发送心跳timer&amp;#125;//实现文件timer = [NSTimer scheduledTimerWithTim">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mark!jsonmodel转换的一个小插件">
-<meta property="og:url" content="http://yoursite.com/2015/11/26/ESJsonFormat-Xcode/index.html">
+<meta property="og:title" content="Rick’s house">
+<meta property="og:url" content="http://yoursite.com/2016/09/21/iOS_xib_issue/index.html">
 <meta property="og:site_name" content="Rick’s house">
-<meta property="og:description" content="一个根据json字符串生成model头文件的小插件，老是搞丢，先mark一下～
-
-github地址">
-<meta property="og:image" content="https://raw.githubusercontent.com/EnjoySR/ESJsonFormat-Xcode/master/ScreenShot/ScreenShot3.gif">
-<meta property="og:updated_time" content="2015-11-26T03:35:29.000Z">
+<meta property="og:description" content="title: iOS10下
+date: 2015-11-04 13:52:11
+categories: 技术文章
+tags: [ARC,循环引用]123456@interface FtKeepAlive : NSObject&amp;#123;    NSTimer* timer; // 发送心跳timer&amp;#125;//实现文件timer = [NSTimer scheduledTimerWithTim">
+<meta property="og:updated_time" content="2016-09-21T02:27:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mark!jsonmodel转换的一个小插件">
-<meta name="twitter:description" content="一个根据json字符串生成model头文件的小插件，老是搞丢，先mark一下～
-
-github地址">
+<meta name="twitter:title" content="Rick’s house">
+<meta name="twitter:description" content="title: iOS10下
+date: 2015-11-04 13:52:11
+categories: 技术文章
+tags: [ARC,循环引用]123456@interface FtKeepAlive : NSObject&amp;#123;    NSTimer* timer; // 发送心跳timer&amp;#125;//实现文件timer = [NSTimer scheduledTimerWithTim">
   
     <link rel="alternative" href="/atom.xml" title="Rick’s house" type="application/atom+xml">
   
@@ -186,11 +188,11 @@ github地址">
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-ESJsonFormat-Xcode" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-iOS_xib_issue" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/11/26/ESJsonFormat-Xcode/" class="article-date">
-  	<time datetime="2015-11-26T03:30:59.000Z" itemprop="datePublished">2015-11-26</time>
+      <a href="/2016/09/21/iOS_xib_issue/" class="article-date">
+  	<time datetime="2016-09-21T02:27:01.000Z" itemprop="datePublished">2016-09-21</time>
 </a>
     </div>
   
@@ -199,37 +201,15 @@ github地址">
       <input type="hidden" class="isFancy" />
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      mark!jsonmodel转换的一个小插件
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/插件/">插件</a></li></ul>
-	</div>
-
-        
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/github源码记录/">github源码记录</a>
-	</div>
-
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一个根据json字符串生成model头文件的小插件，老是搞丢，先mark一下～</p>
-<p><img src="https://raw.githubusercontent.com/EnjoySR/ESJsonFormat-Xcode/master/ScreenShot/ScreenShot3.gif" alt="图"></p>
-<h1 id="github地址"><a href="https://github.com/EnjoySR/ESJsonFormat-Xcode" target="_blank" rel="external">github地址</a></h1>
+        <p>title: iOS10下</p>
+<p>date: 2015-11-04 13:52:11</p>
+<p>categories: 技术文章</p>
+<h2 id="tags:_[ARC,循环引用]">tags: [ARC,循环引用]</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> <span class="string">FtKeepAlive :</span> NSObject</span><br><span class="line">&#123;</span><br><span class="line">    NSTimer* timer; <span class="comment">// 发送心跳timer</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实现文件</span></span><br><span class="line">timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1</span> <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(someAction) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
+<p>这里的timer会持有self</p>
+<p>在不需要timer的时候需要调用</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[timer invalidate]</span><span class="comment">;</span></span><br><span class="line"><span class="setting">timer = <span class="value">nil;</span></span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -238,7 +218,7 @@ github地址">
     
 <nav id="article-nav">
   
-    <a href="/2016/09/21/iOS_xib_issue/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/09/21/Xcode8_xib_issue/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
@@ -248,8 +228,8 @@ github地址">
     </a>
   
   
-    <a href="/2015/11/09/ios-DNS/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">iOS开发之DNS解析</div>
+    <a href="/2015/11/26/ESJsonFormat-Xcode/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mark!jsonmodel转换的一个小插件</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -278,7 +258,7 @@ github地址">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="ESJsonFormat-Xcode" data-title="mark!jsonmodel转换的一个小插件" data-url="http://yoursite.com/2015/11/26/ESJsonFormat-Xcode/"></div>
+	<div class="ds-thread" data-thread-key="iOS_xib_issue" data-title="" data-url="http://yoursite.com/2016/09/21/iOS_xib_issue/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

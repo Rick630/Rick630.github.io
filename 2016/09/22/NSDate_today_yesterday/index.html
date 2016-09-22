@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>判断一个NSDate是否是今天/昨天的小办法 | Rick’s house</title>
+  <title>iOS7判断一个NSDate是否是今天/昨天的小办法 | Rick’s house</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下NSCalendar，发现苹果其实是提供了这个API的
 1/*&amp;#10;&amp;#9;This API reports if the date is within &amp;#34;today&amp;#34;.&amp;#10;*/&amp;#10;- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);">
 <meta property="og:type" content="article">
-<meta property="og:title" content="判断一个NSDate是否是今天/昨天的小办法">
+<meta property="og:title" content="iOS7判断一个NSDate是否是今天/昨天的小办法">
 <meta property="og:url" content="http://yoursite.com/2016/09/22/NSDate_today_yesterday/index.html">
 <meta property="og:site_name" content="Rick’s house">
 <meta property="og:description" content="今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下NSCalendar，发现苹果其实是提供了这个API的
 1/*&amp;#10;&amp;#9;This API reports if the date is within &amp;#34;today&amp;#34;.&amp;#10;*/&amp;#10;- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);">
-<meta property="og:updated_time" content="2016-09-22T08:14:26.000Z">
+<meta property="og:updated_time" content="2016-09-22T08:17:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="判断一个NSDate是否是今天/昨天的小办法">
+<meta name="twitter:title" content="iOS7判断一个NSDate是否是今天/昨天的小办法">
 <meta name="twitter:description" content="今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下NSCalendar，发现苹果其实是提供了这个API的
 1/*&amp;#10;&amp;#9;This API reports if the date is within &amp;#34;today&amp;#34;.&amp;#10;*/&amp;#10;- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);">
   
@@ -146,7 +146,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      判断一个NSDate是否是今天/昨天的小办法
+      iOS7判断一个NSDate是否是今天/昨天的小办法
     </h1>
   
 
@@ -156,7 +156,7 @@
       
         <p>今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下<code>NSCalendar</code>，发现苹果其实是提供了这个API的</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*&#10;&#9;This API reports if the date is within &#34;today&#34;.&#10;*/&#10;- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);&#10;/*&#10;&#9;This API reports if the date is within &#34;yesterday&#34;.&#10;*/&#10;- (BOOL)isDateInYesterday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);</span><br></pre></td></tr></table></figure>
-<p>可是我们项目需要兼容到iOS7,没办法只能自己动手了<del>因为懒，最后还是google了</del></p>
+<p>可是我们项目需要兼容到iOS7,没办法只能自己动手了<a id="more"></a><del>因为懒，最后还是google了</del></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+(BOOL)isInToday:(NSDate *)date&#10;&#123;&#10;    if([[NSCalendar currentCalendar] respondsToSelector:@selector(isDateInToday:)]) //iOS8&#20197;&#19978;&#30452;&#25509;&#20351;&#29992;&#31995;&#32479;api&#10;    &#123;&#10;        return [[NSCalendar currentCalendar] isDateInToday:date];&#10;    &#125;&#10;    else&#10;    &#123;&#10;        NSCalendar *calendar = [NSCalendar currentCalendar];&#10;        NSCalendarUnit calendarUnits = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;&#10;        &#10;        NSDateComponents *components = [calendar components:calendarUnits&#10;                                                   fromDate:date];&#10;        NSDateComponents *todayComponents = [calendar components:calendarUnits&#10;                                                        fromDate:[NSDate date]];&#10;        &#10;        NSDate *lessGranularDate1 = [calendar dateFromComponents:components];&#10;        NSDate *lessGranularToday = [calendar dateFromComponents:todayComponents];&#10;        &#10;        BOOL isInToday = [lessGranularDate1 isEqualToDate:lessGranularToday];&#10;        &#10;        return isInToday;&#10;    &#125;&#10;&#125;&#10;+(BOOL)isInYesterDay:(NSDate *)date&#10;&#123;&#10;    if([[NSCalendar currentCalendar] respondsToSelector:@selector(isDateInYesterday:)])//iOS8&#20197;&#19978;&#30452;&#25509;&#20351;&#29992;&#31995;&#32479;api&#10;    &#123;&#10;        return [[NSCalendar currentCalendar] isDateInYesterday:date];&#10;    &#125;&#10;    else&#10;    &#123;&#10;        NSCalendar *calendar = [NSCalendar currentCalendar];&#10;        NSCalendarUnit calendarUnits = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;&#10;        &#10;        NSDateComponents *components = [calendar components:calendarUnits&#10;                                                   fromDate:date];&#10;        NSDateComponents *yesterdayComponents = [calendar components:calendarUnits&#10;                                                            fromDate:[[NSDate date] dateByAddingTimeInterval:-1*60*60*24]];&#10;        &#10;        NSDate *lessGranularDate1 = [calendar dateFromComponents:components];&#10;        NSDate *lessGranularYesterday = [calendar dateFromComponents:yesterdayComponents];&#10;        &#10;        BOOL isYesterday = [lessGranularDate1 isEqualToDate:lessGranularYesterday];&#10;        &#10;        return isYesterday;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
 
       
@@ -223,7 +223,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="NSDate_today_yesterday" data-title="判断一个NSDate是否是今天/昨天的小办法" data-url="http://yoursite.com/2016/09/22/NSDate_today_yesterday/"></div>
+	<div class="ds-thread" data-thread-key="NSDate_today_yesterday" data-title="iOS7判断一个NSDate是否是今天/昨天的小办法" data-url="http://yoursite.com/2016/09/22/NSDate_today_yesterday/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

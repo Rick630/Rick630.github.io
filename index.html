@@ -144,7 +144,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/22/NSDate_today_yesterday/">判断一个NSDate是否是今天/昨天的小办法</a>
+      <a class="article-title" href="/2016/09/22/NSDate_today_yesterday/">iOS7判断一个NSDate是否是今天/昨天的小办法</a>
     </h1>
   
 
@@ -154,9 +154,10 @@
       
         <p>今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下<code>NSCalendar</code>，发现苹果其实是提供了这个API的</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/*&#10;&#9;This API reports if the date is within &#34;today&#34;.&#10;*/&#10;- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);&#10;/*&#10;&#9;This API reports if the date is within &#34;yesterday&#34;.&#10;*/&#10;- (BOOL)isDateInYesterday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);</span><br></pre></td></tr></table></figure>
-<p>可是我们项目需要兼容到iOS7,没办法只能自己动手了<del>因为懒，最后还是google了</del></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+(BOOL)isInToday:(NSDate *)date&#10;&#123;&#10;    if([[NSCalendar currentCalendar] respondsToSelector:@selector(isDateInToday:)]) //iOS8&#20197;&#19978;&#30452;&#25509;&#20351;&#29992;&#31995;&#32479;api&#10;    &#123;&#10;        return [[NSCalendar currentCalendar] isDateInToday:date];&#10;    &#125;&#10;    else&#10;    &#123;&#10;        NSCalendar *calendar = [NSCalendar currentCalendar];&#10;        NSCalendarUnit calendarUnits = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;&#10;        &#10;        NSDateComponents *components = [calendar components:calendarUnits&#10;                                                   fromDate:date];&#10;        NSDateComponents *todayComponents = [calendar components:calendarUnits&#10;                                                        fromDate:[NSDate date]];&#10;        &#10;        NSDate *lessGranularDate1 = [calendar dateFromComponents:components];&#10;        NSDate *lessGranularToday = [calendar dateFromComponents:todayComponents];&#10;        &#10;        BOOL isInToday = [lessGranularDate1 isEqualToDate:lessGranularToday];&#10;        &#10;        return isInToday;&#10;    &#125;&#10;&#125;&#10;+(BOOL)isInYesterDay:(NSDate *)date&#10;&#123;&#10;    if([[NSCalendar currentCalendar] respondsToSelector:@selector(isDateInYesterday:)])//iOS8&#20197;&#19978;&#30452;&#25509;&#20351;&#29992;&#31995;&#32479;api&#10;    &#123;&#10;        return [[NSCalendar currentCalendar] isDateInYesterday:date];&#10;    &#125;&#10;    else&#10;    &#123;&#10;        NSCalendar *calendar = [NSCalendar currentCalendar];&#10;        NSCalendarUnit calendarUnits = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;&#10;        &#10;        NSDateComponents *components = [calendar components:calendarUnits&#10;                                                   fromDate:date];&#10;        NSDateComponents *yesterdayComponents = [calendar components:calendarUnits&#10;                                                            fromDate:[[NSDate date] dateByAddingTimeInterval:-1*60*60*24]];&#10;        &#10;        NSDate *lessGranularDate1 = [calendar dateFromComponents:components];&#10;        NSDate *lessGranularYesterday = [calendar dateFromComponents:yesterdayComponents];&#10;        &#10;        BOOL isYesterday = [lessGranularDate1 isEqualToDate:lessGranularYesterday];&#10;        &#10;        return isYesterday;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-
+<p>可是我们项目需要兼容到iOS7,没办法只能自己动手了
+        <p class="article-more-link">
+          <a  href="/2016/09/22/NSDate_today_yesterday/#more">more >></a>
+        </p>
       
     </div>
     <div class="article-info article-info-index">

@@ -6,17 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 测试 | Rick技术博客</title>
+  <title>隐藏UINavigationBar可能会遇到的一个坑 | Rick技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录开发中所踩过的坑和有意思的东西">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Rick技术博客">
-<meta property="og:url" content="http://yoursite.com/tags/测试/index.html">
+  <meta name="description" content="因为业务需求，通常会在viewWillAppear下执行self.navigationController.navigationBarHidden = YES/NO
+然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等
+其实正确的姿势应该是
+1- (void)viewWillAppear:(BOOL)animated &amp;#123;&amp;#10;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐藏UINavigationBar可能会遇到的一个坑">
+<meta property="og:url" content="http://yoursite.com/2016/11/16/an_issue_when_hide_UINavigationBar/index.html">
 <meta property="og:site_name" content="Rick技术博客">
-<meta property="og:description" content="记录开发中所踩过的坑和有意思的东西">
+<meta property="og:description" content="因为业务需求，通常会在viewWillAppear下执行self.navigationController.navigationBarHidden = YES/NO
+然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等
+其实正确的姿势应该是
+1- (void)viewWillAppear:(BOOL)animated &amp;#123;&amp;#10;">
+<meta property="og:updated_time" content="2016-11-16T06:35:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Rick技术博客">
-<meta name="twitter:description" content="记录开发中所踩过的坑和有意思的东西">
+<meta name="twitter:title" content="隐藏UINavigationBar可能会遇到的一个坑">
+<meta name="twitter:description" content="因为业务需求，通常会在viewWillAppear下执行self.navigationController.navigationBarHidden = YES/NO
+然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等
+其实正确的姿势应该是
+1- (void)viewWillAppear:(BOOL)animated &amp;#123;&amp;#10;">
   
     <link rel="alternative" href="/atom.xml" title="Rick技术博客" type="application/atom+xml">
   
@@ -136,59 +146,114 @@
 </nav>
 
       <div class="body-wrap">
+        <article id="post-an_issue_when_hide_UINavigationBar" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
         
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/11/02/第一篇文章/" class="archive-article-date">
-  	<time datetime="2015-11-02T04:46:49.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/02/第一篇文章/">第一篇文章</a>
+    <h1 class="article-title" itemprop="name">
+      隐藏UINavigationBar可能会遇到的一个坑
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为业务需求，通常会在<code>viewWillAppear</code>下执行<code>self.navigationController.navigationBarHidden = YES/NO</code></p>
+<p>然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等</p>
+<p>其实正确的姿势应该是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewWillAppear:(BOOL)animated &#123;&#10;    [self.navigationController setNavigationBarHidden:YES animated:animated];&#10;    [super viewWillAppear:animated];&#10;&#125;&#10;&#10;- (void)viewWillDisappear:(BOOL)animated &#123;&#10;    [self.navigationController setNavigationBarHidden:NO animated:animated];&#10;    [super viewWillDisappear:animated];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，就不回有问题了</p>
+<p>PS：在最新的iOS10里，apple似乎对UINavigationBar进行了重构，这个问题似乎只会存在于iOS10以下的系统</p>
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      <a href="/2016/11/16/an_issue_when_hide_UINavigationBar/" class="archive-article-date">
+  	<time datetime="2016-11-16T06:30:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-11-16</time>
+</a>
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/测试/">测试</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UINavigationBar/">UINavigationBar</a></li></ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/随写/">随写</a>
+	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
-  
 
-    
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/22/NSDate_today_yesterday副本/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS7判断一个NSDate是否是今天/昨天的小办法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+	    <a class="jiathis_button_twitter"></a>
+	    <a class="jiathis_button_plus"></a> 
+	    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="an_issue_when_hide_UINavigationBar" data-title="隐藏UINavigationBar可能会遇到的一个坑" data-url="http://yoursite.com/2016/11/16/an_issue_when_hide_UINavigationBar/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 
       </div>
@@ -211,9 +276,9 @@
 		mathjax: false,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",

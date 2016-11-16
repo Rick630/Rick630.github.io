@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>(坑)NSTimer会持有对象导致循环引用 | Rick技术博客</title>
+  <title>iOS7判断一个NSDate是否是今天/昨天的小办法 | Rick技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="123456@interface FtKeepAlive : NSObject&amp;#123;    NSTimer* timer; // 发送心跳timer&amp;#125;//实现文件timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(someAction) userInfo:nil repea">
+  <meta name="description" content="今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下NSCalendar，发现苹果其实是提供了这个API的
+12345678/*	This API reports if the date is within &quot;today&quot;.*/- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);/*	This API reports">
 <meta property="og:type" content="article">
-<meta property="og:title" content="(坑)NSTimer会持有对象导致循环引用">
-<meta property="og:url" content="http://yoursite.com/2015/11/04/nstimer-not-release/index.html">
+<meta property="og:title" content="iOS7判断一个NSDate是否是今天/昨天的小办法">
+<meta property="og:url" content="http://yoursite.com/2016/09/22/NSDate_today_yesterday副本/index.html">
 <meta property="og:site_name" content="Rick技术博客">
-<meta property="og:description" content="123456@interface FtKeepAlive : NSObject&amp;#123;    NSTimer* timer; // 发送心跳timer&amp;#125;//实现文件timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(someAction) userInfo:nil repea">
-<meta property="og:updated_time" content="2015-11-04T06:20:58.000Z">
+<meta property="og:description" content="今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下NSCalendar，发现苹果其实是提供了这个API的
+12345678/*	This API reports if the date is within &quot;today&quot;.*/- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);/*	This API reports">
+<meta property="og:updated_time" content="2016-09-23T09:16:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="(坑)NSTimer会持有对象导致循环引用">
-<meta name="twitter:description" content="123456@interface FtKeepAlive : NSObject&amp;#123;    NSTimer* timer; // 发送心跳timer&amp;#125;//实现文件timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(someAction) userInfo:nil repea">
+<meta name="twitter:title" content="iOS7判断一个NSDate是否是今天/昨天的小办法">
+<meta name="twitter:description" content="今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下NSCalendar，发现苹果其实是提供了这个API的
+12345678/*	This API reports if the date is within &quot;today&quot;.*/- (BOOL)isDateInToday:(NSDate *)date NS_AVAILABLE(10_9, 8_0);/*	This API reports">
   
     <link rel="alternative" href="/atom.xml" title="Rick技术博客" type="application/atom+xml">
   
@@ -137,7 +140,7 @@
 </nav>
 
       <div class="body-wrap">
-        <article id="post-nstimer-not-release" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-NSDate_today_yesterday副本" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <input type="hidden" class="isFancy" />
@@ -147,7 +150,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      (坑)NSTimer会持有对象导致循环引用
+      iOS7判断一个NSDate是否是今天/昨天的小办法
     </h1>
   
 
@@ -155,30 +158,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@interface</span> <span class="string">FtKeepAlive :</span> NSObject</span><br><span class="line">&#123;</span><br><span class="line">    NSTimer* timer; <span class="comment">// 发送心跳timer</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实现文件</span></span><br><span class="line">timer = [NSTimer <span class="string">scheduledTimerWithTimeInterval:</span><span class="number">1</span> <span class="string">target:</span>self <span class="string">selector:</span><span class="annotation">@selector</span>(someAction) <span class="string">userInfo:</span>nil <span class="string">repeats:</span>YES];</span><br></pre></td></tr></table></figure>
-<p>这里的timer会持有self</p>
-<p>在不需要timer的时候需要调用</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[timer invalidate]</span><span class="comment">;</span></span><br><span class="line"><span class="setting">timer = <span class="value">nil;</span></span></span><br></pre></td></tr></table></figure>
+        <p>今天项目遇到个需求，需要根据时间来显示不同的样式，于是去翻了一下<code>NSCalendar</code>，发现苹果其实是提供了这个API的</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line">	This API reports if the date is within "today".</span><br><span class="line">*/</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)isDateInToday:(<span class="built_in">NSDate</span> *)date <span class="built_in">NS_AVAILABLE</span>(<span class="number">10</span>_9, <span class="number">8</span>_0);</span><br><span class="line"><span class="comment">/*</span><br><span class="line">	This API reports if the date is within "yesterday".</span><br><span class="line">*/</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)isDateInYesterday:(<span class="built_in">NSDate</span> *)date <span class="built_in">NS_AVAILABLE</span>(<span class="number">10</span>_9, <span class="number">8</span>_0);</span><br></pre></td></tr></table></figure>
+<p>可是我们项目需要兼容到iOS7,没办法只能自己动手了<a id="more"></a><del>因为懒，最后还是google了</del></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">+(<span class="built_in">BOOL</span>)isInToday:(<span class="built_in">NSDate</span> *)date</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>([[<span class="built_in">NSCalendar</span> currentCalendar] respondsToSelector:<span class="keyword">@selector</span>(isDateInToday:)]) <span class="comment">//iOS8以上直接使用系统api</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> [[<span class="built_in">NSCalendar</span> currentCalendar] isDateInToday:date];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSCalendar</span> *calendar = [<span class="built_in">NSCalendar</span> currentCalendar];</span><br><span class="line">        <span class="built_in">NSCalendarUnit</span> calendarUnits = <span class="built_in">NSCalendarUnitYear</span> | <span class="built_in">NSCalendarUnitMonth</span> | <span class="built_in">NSCalendarUnitDay</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSDateComponents</span> *components = [calendar components:calendarUnits</span><br><span class="line">                                                   fromDate:date];</span><br><span class="line">        <span class="built_in">NSDateComponents</span> *todayComponents = [calendar components:calendarUnits</span><br><span class="line">                                                        fromDate:[<span class="built_in">NSDate</span> date]];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSDate</span> *lessGranularDate1 = [calendar dateFromComponents:components];</span><br><span class="line">        <span class="built_in">NSDate</span> *lessGranularToday = [calendar dateFromComponents:todayComponents];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">BOOL</span> isInToday = [lessGranularDate1 isEqualToDate:lessGranularToday];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> isInToday;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">+(<span class="built_in">BOOL</span>)isInYesterDay:(<span class="built_in">NSDate</span> *)date</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>([[<span class="built_in">NSCalendar</span> currentCalendar] respondsToSelector:<span class="keyword">@selector</span>(isDateInYesterday:)])<span class="comment">//iOS8以上直接使用系统api</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> [[<span class="built_in">NSCalendar</span> currentCalendar] isDateInYesterday:date];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSCalendar</span> *calendar = [<span class="built_in">NSCalendar</span> currentCalendar];</span><br><span class="line">        <span class="built_in">NSCalendarUnit</span> calendarUnits = <span class="built_in">NSCalendarUnitYear</span> | <span class="built_in">NSCalendarUnitMonth</span> | <span class="built_in">NSCalendarUnitDay</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSDateComponents</span> *components = [calendar components:calendarUnits</span><br><span class="line">                                                   fromDate:date];</span><br><span class="line">        <span class="built_in">NSDateComponents</span> *yesterdayComponents = [calendar components:calendarUnits</span><br><span class="line">                                                            fromDate:[[<span class="built_in">NSDate</span> date] dateByAddingTimeInterval:-<span class="number">1</span>*<span class="number">60</span>*<span class="number">60</span>*<span class="number">24</span>]];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSDate</span> *lessGranularDate1 = [calendar dateFromComponents:components];</span><br><span class="line">        <span class="built_in">NSDate</span> *lessGranularYesterday = [calendar dateFromComponents:yesterdayComponents];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">BOOL</span> isYesterday = [lessGranularDate1 isEqualToDate:lessGranularYesterday];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> isYesterday;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <div class="article-info article-info-index">
       
-      <a href="/2015/11/04/nstimer-not-release/" class="archive-article-date">
-  	<time datetime="2015-11-04T05:52:11.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-11-04</time>
+      <a href="/2016/09/22/NSDate_today_yesterday副本/" class="archive-article-date">
+  	<time datetime="2016-09-22T08:00:00.000Z" itemprop="datePublished"><i class="icon-clock"></i>2016-09-22</time>
 </a>
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ARC/">ARC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/循环引用/">循环引用</a></li></ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
-	</div>
-
 
       <div class="clearfix"></div>
     </div>
@@ -188,18 +181,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/11/05/Objc-2015/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/11/16/an_issue_when_hide_UINavigationBar/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)
+          隐藏UINavigationBar可能会遇到的一个坑
         
       </div>
     </a>
   
   
-    <a href="/2015/11/03/ios-kaopu2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">招聘一个靠谱的iOS&lt;答案2&gt;</div>
+    <a href="/2016/09/22/NSDate_today_yesterday/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS7判断一个NSDate是否是今天/昨天的小办法</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -233,7 +226,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="nstimer-not-release" data-title="(坑)NSTimer会持有对象导致循环引用" data-url="http://yoursite.com/2015/11/04/nstimer-not-release/"></div>
+	<div class="ds-thread" data-thread-key="NSDate_today_yesterday副本" data-title="iOS7判断一个NSDate是否是今天/昨天的小办法" data-url="http://yoursite.com/2016/09/22/NSDate_today_yesterday副本/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

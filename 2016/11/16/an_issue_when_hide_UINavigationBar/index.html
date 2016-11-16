@@ -11,7 +11,7 @@
   <meta name="description" content="因为业务需求，通常会在viewWillAppear下执行self.navigationController.navigationBarHidden = YES/NO
 然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等
 其实正确的姿势应该是
-1- (void)viewWillAppear:(BOOL)animated &amp;#123;&amp;#10;">
+123456789- (void)viewWillAppear:(BOOL)animated &amp;#123">
 <meta property="og:type" content="article">
 <meta property="og:title" content="隐藏UINavigationBar可能会遇到的一个坑">
 <meta property="og:url" content="http://yoursite.com/2016/11/16/an_issue_when_hide_UINavigationBar/index.html">
@@ -19,14 +19,14 @@
 <meta property="og:description" content="因为业务需求，通常会在viewWillAppear下执行self.navigationController.navigationBarHidden = YES/NO
 然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等
 其实正确的姿势应该是
-1- (void)viewWillAppear:(BOOL)animated &amp;#123;&amp;#10;">
-<meta property="og:updated_time" content="2016-11-16T06:35:50.000Z">
+123456789- (void)viewWillAppear:(BOOL)animated &amp;#123">
+<meta property="og:updated_time" content="2016-11-16T06:37:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="隐藏UINavigationBar可能会遇到的一个坑">
 <meta name="twitter:description" content="因为业务需求，通常会在viewWillAppear下执行self.navigationController.navigationBarHidden = YES/NO
 然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等
 其实正确的姿势应该是
-1- (void)viewWillAppear:(BOOL)animated &amp;#123;&amp;#10;">
+123456789- (void)viewWillAppear:(BOOL)animated &amp;#123">
   
     <link rel="alternative" href="/atom.xml" title="Rick技术博客" type="application/atom+xml">
   
@@ -167,8 +167,8 @@
         <p>因为业务需求，通常会在<code>viewWillAppear</code>下执行<code>self.navigationController.navigationBarHidden = YES/NO</code></p>
 <p>然后就会看到navigationBar出现各种问题：navigationItem重叠、标题重叠、失去动画等</p>
 <p>其实正确的姿势应该是</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewWillAppear:(BOOL)animated &#123;&#10;    [self.navigationController setNavigationBarHidden:YES animated:animated];&#10;    [super viewWillAppear:animated];&#10;&#125;&#10;&#10;- (void)viewWillDisappear:(BOOL)animated &#123;&#10;    [self.navigationController setNavigationBarHidden:NO animated:animated];&#10;    [super viewWillDisappear:animated];&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，就不回有问题了</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.navigationController</span> setNavigationBarHidden:<span class="literal">YES</span> animated:animated];</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewWillDisappear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.navigationController</span> setNavigationBarHidden:<span class="literal">NO</span> animated:animated];</span><br><span class="line">    [<span class="keyword">super</span> viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，就不会有问题了</p>
 <p>PS：在最新的iOS10里，apple似乎对UINavigationBar进行了重构，这个问题似乎只会存在于iOS10以下的系统</p>
 
       
@@ -200,7 +200,7 @@
 <nav id="article-nav">
   
   
-    <a href="/2016/09/22/NSDate_today_yesterday副本/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/09/22/NSDate_today_yesterday/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">iOS7判断一个NSDate是否是今天/昨天的小办法</div>
       <i class="icon-circle-right"></i>
     </a>

@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   
+  <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>(转)iOS JSON 模型转换库评测 | Rick’s house</title>
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>(转)iOS JSON 模型转换库评测 | Rick技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原文出自
 
@@ -17,7 +19,7 @@ Manually
 <meta property="og:type" content="article">
 <meta property="og:title" content="(转)iOS JSON 模型转换库评测">
 <meta property="og:url" content="http://yoursite.com/2015/11/03/ios-model-framework-benchmark/index.html">
-<meta property="og:site_name" content="Rick’s house">
+<meta property="og:site_name" content="Rick技术博客">
 <meta property="og:description" content="原文出自
 
 http://blog.ibireme.com/2015/10/23/ios_model_framework_benchmark/
@@ -40,12 +42,14 @@ iOS 开发中总会用到各种 JSON 模型转换库，这篇文章将会对常�
 Manually
 手动进行 JSON/Model 转换，不用任何开源库，可以进行高效、自由的转">
   
-    <link rel="alternative" href="/atom.xml" title="Rick’s house" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Rick技术博客" type="application/atom+xml">
   
   
-    <link rel="icon" href="//favicon.ico">
+    <link rel="icon" href="/favicon.ico">
   
-  <script src="/style.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/main.css" type="text/css">
+  
+
 </head>
 
 <body>
@@ -309,7 +313,7 @@ Manually
 		<a class="jiathis_button_tumblr"></a>
     <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
 	<!-- JiaThis Button END -->
 </div>
 
@@ -358,7 +362,7 @@ Manually
     <script>
 	var yiliaConfig = {
 		fancybox: true,
-		mathjax: true,
+		mathjax: false,
 		animate: true,
 		isHome: false,
 		isPost: true,
@@ -366,35 +370,12 @@ Manually
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
-		root: "/"
+		root: "/",
+		innerArchive: true
 	}
 </script>
 
 <script src="/./main.js" type="text/javascript"></script>
-
-
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
     
@@ -444,7 +425,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-me">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">iOS小菜一枚</div>
   	  	
     	</section>
     
@@ -481,7 +462,7 @@ MathJax.Hub.Queue(function() {
 
                 <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 
-                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
 
                 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 

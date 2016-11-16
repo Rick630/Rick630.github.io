@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   
+  <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Objective-C 2015新改动(终于知道啥叫泛型了＝。＝) | Rick’s house</title>
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>Objective-C 2015新改动(终于知道啥叫泛型了＝。＝) | Rick技术博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原文
 
@@ -14,7 +16,7 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)">
 <meta property="og:url" content="http://yoursite.com/2015/11/05/Objc-2015/index.html">
-<meta property="og:site_name" content="Rick’s house">
+<meta property="og:site_name" content="Rick技术博客">
 <meta property="og:description" content="原文
 
 http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/
@@ -36,12 +38,14 @@ http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/
 
 Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情又一次高涨起来，在羡慕创业公司的朋友们大谈 Swift 新特性的同时，也有很多像我一样工作上依然需要坚守着 Objective-C 语言的开发者们。今年的 WWDC">
   
-    <link rel="alternative" href="/atom.xml" title="Rick’s house" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Rick技术博客" type="application/atom+xml">
   
   
-    <link rel="icon" href="//favicon.ico">
+    <link rel="icon" href="/favicon.ico">
   
-  <script src="/style.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/main.css" type="text/css">
+  
+
 </head>
 
 <body>
@@ -300,7 +304,7 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
 		<a class="jiathis_button_tumblr"></a>
     <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
 	<!-- JiaThis Button END -->
 </div>
 
@@ -349,7 +353,7 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
     <script>
 	var yiliaConfig = {
 		fancybox: true,
-		mathjax: true,
+		mathjax: false,
 		animate: true,
 		isHome: false,
 		isPost: true,
@@ -357,35 +361,12 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
-		root: "/"
+		root: "/",
+		innerArchive: true
 	}
 </script>
 
 <script src="/./main.js" type="text/javascript"></script>
-
-
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 
     
@@ -435,7 +416,7 @@ MathJax.Hub.Queue(function() {
     
     	<section class="tools-section tools-section-me">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">iOS小菜一枚</div>
   	  	
     	</section>
     
@@ -472,7 +453,7 @@ MathJax.Hub.Queue(function() {
 
                 <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
 
-                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
 
                 <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
 

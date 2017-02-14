@@ -1,181 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Objective-C 2015新改动(终于知道啥叫泛型了＝。＝) | Rick技术博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="原文
-
-http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/
-
-Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情又一次高涨起来，在羡慕创业公司的朋友们大谈 Swift 新特性的同时，也有很多像我一样工作上依然需要坚守着 Objective-C 语言的开发者们。今年的 WWDC">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)">
-<meta property="og:url" content="http://yoursite.com/2015/11/05/Objc-2015/index.html">
-<meta property="og:site_name" content="Rick技术博客">
-<meta property="og:description" content="原文
-
-http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/
-
-Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情又一次高涨起来，在羡慕创业公司的朋友们大谈 Swift 新特性的同时，也有很多像我一样工作上依然需要坚守着 Objective-C 语言的开发者们。今年的 WWDC">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/51530583jw1et1s9igr0wj20jc03i74z.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/51530583jw1et1sf4799fj20oo02ywfh.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/51530583jw1et2eqtxt07j20n6040wft.jpg">
-<meta property="og:image" content="http://ww3.sinaimg.cn/large/51530583jw1et2fajoo7bj210o09y78w.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/51530583jw1et2frpvgzpj212q060q5f.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/51530583jw1et2fsyrpfej212m05emzl.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/51530583jw1et2iirmu7bj20ze0bojvm.jpg">
-<meta property="og:updated_time" content="2015-11-05T03:14:13.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)">
-<meta name="twitter:description" content="原文
-
-http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/
-
-Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情又一次高涨起来，在羡慕创业公司的朋友们大谈 Swift 新特性的同时，也有很多像我一样工作上依然需要坚守着 Objective-C 语言的开发者们。今年的 WWDC">
-<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/51530583jw1et1s9igr0wj20jc03i74z.jpg">
-  
-    <link rel="alternative" href="/atom.xml" title="Rick技术博客" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.ico">
-  
-  <link rel="stylesheet" href="/main.css">
-  
-
-</head>
-
-<body>
-  <div id="container">
-    <div class="left-col">
-      <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img src="https://coding.net/u/RickH/p/RickH.coding.me/git/raw/master/headimg.jpeg" class="js-avatar">
-			
-		</a>
-
-		<hgroup>
-		  <h1 class="header-author"><a href="/">Rick</a></h1>
-		</hgroup>
-
-		
-		<p class="header-subtitle">分享、记录</p>
-		
-
-		<nav class="header-menu">
-			<ul>
-			
-				<li><a href="/">主页</a></li>
-	        
-				<li><a href="/archives">所有文章</a></li>
-	        
-				<li><a href="/categories/github源码记录">github备忘</a></li>
-	        
-				<li><a href="/categories/技术文章">技术交流</a></li>
-	        
-			</ul>
-		</nav>
-		<nav class="header-smart-menu">
-	        
-    		
-    			
-    			<a class="js-smart-menu" data-idx="0" href="javascript:void(0)">所有文章</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="1" href="javascript:void(0)">标签</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="2" href="javascript:void(0)">友链</a>
-    			
-    			
-            
-    			
-    			<a class="js-smart-menu" data-idx="3" href="javascript:void(0)">关于我</a>
-    			
-    			
-            
-		</nav>
-		<nav class="header-nav">
-			<div class="social">
-				
-			</div>
-		</nav>
-	</header>		
-</div>
-
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"><i class="icon-list"></i></div>
-  		<h1 class="header-author js-mobile-header hide">Rick</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				
-					<img src="https://coding.net/u/RickH/p/RickH.coding.me/git/raw/master/headimg.jpeg" class="js-avatar">
-				
-			</div>
-			<hgroup>
-			  <h1 class="header-author">Rick</h1>
-			</hgroup>
-			
-			<p class="header-subtitle">分享、记录</p>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-					<li><a href="/categories/github源码记录">github备忘</a></li>
-		        
-					<li><a href="/categories/技术文章">技术交流</a></li>
-		        
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-
-      <div class="body-wrap">
-        <article id="post-Objc-2015" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原文</p>
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Objective-C 2015新改动(终于知道啥叫泛型了＝。＝) | Rick技术博客</title><meta name="description" content="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝) - Rick"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/casual.css"><link rel="stylesheet" href="/css/semantic.min.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Rick技术博客"></head><body><div class="sidebar"><div class="ui vertical inverted menu"><div class="h100"></div><h3 class="ui inverted aligned icon header"><div class="content"><a href="/" class="title-link">RICK技术博客</a></div></h3><div class="h50"></div><div class="side-nav"><a href="/" target="_self" class="item">HOME<i class="icon home"></i></a><a href="/archives" target="_self" class="item">ARCHIVE<i class="icon archive"></i></a><a href="/tags" target="_self" class="item">TAGS<i class="icon tags"></i></a><a href="/about" target="_self" class="item">INFO<i class="icon info"></i></a><a href="/atom.xml" target="_self" class="item">RSS<i class="icon rss"></i></a></div><div class="item"><div class="ui inverted transparent icon input"><input type="text" placeholder="Search..." class="st-default-search-input"><i class="search icon"></i></div></div><div class="h50"></div></div><div class="h50 mq"><a class="ui teal big label"><i class="content icon"></i></a></div><div class="author-info"><a href="/" class="img-link"><img src="/avatar.png" class="author-photo ui tiny circular image"></a><h4 class="ui aligned icon header"><div class="content">Rick</div></h4><p class="author-desc">朝着前端打怪升级中 | 目前从事闪存产品的固件和测试工具开发工作 | 多特蒙德死忠</p><div class="social-outer"><div class="social-inner"><a href="http://github.com/littlewin-wang" target="_blank" class="social-link"><i class="icon github"></i></a><a href="http://twitter.com/littlewin_wang" target="_blank" class="social-link"><i class="icon twitter"></i></a><a href="http://weibo.com/fredinweibo" target="_blank" class="social-link"><i class="icon weibo"></i></a></div></div></div></div><div class="main"><div class="wrap"><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)</h1><div class="post-info"><div class="post-date"><h6 class="ui header"><i class="calendar icon"></i><div class="content">Nov 5, 2015</div></h6></div></div><div class="post-content"><p>原文</p>
 <blockquote>
 <p><a href="http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/" target="_blank" rel="external">http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/</a></p>
 </blockquote>
@@ -187,13 +10,13 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
 <h1 id="Nullability">Nullability</h1></li>
 </ul>
 <p>然而 Nullability 并不算新特性了，从上一个版本的 llvm 6.1 (Xcode 6.3) 就已经支持。这个简版的 Optional ，没有 Swift 中 ? 和 ! 语法糖的支持，在 Objective-C 中就显得非常啰嗦了：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, <span class="keyword">nonnull</span>) Sark *sark;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>, <span class="keyword">nullable</span>) <span class="built_in">NSArray</span> *friends;</div><div class="line">+ (<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)friendWithName:(<span class="keyword">nonnull</span> <span class="built_in">NSString</span> *)name;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>, nonnull) Sark *sark;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">readonly</span>, nullable) <span class="built_in">NSArray</span> *friends;</span><br><span class="line">+ (nullable <span class="built_in">NSString</span> *)friendWithName:(nonnull <span class="built_in">NSString</span> *)name;</span><br></pre></td></tr></table></figure>
 <p>假如用来修饰一个变量，前面还要加双下划线，放到 block 里面就更加诡异，比如一个 Request 的 start 方法可以写成：</p>
 <pre><code>- (<span class="keyword">void</span>)startWithCompletionBlock:(nullable <span class="keyword">void</span> (^)(NSError * __nullable <span class="keyword">error</span>))block;
 </code></pre><p>除了这俩外，还有个 <strong>null_resettable</strong> 来表示 setter nullable，但是 getter nonnull，绕死了，最直观例子就是 UIViewController 中的 view 属性：</p>
 <pre><code><span class="keyword">@property</span> (null_resettable, <span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIView</span> *view;
 </code></pre><p>它可以被设成 nil，但是调用 getter 时会触发 <code>-loadView</code> 从而创建并返回一个非 nil 的 view。<br>从 iOS9 SDK 中可以发现，头文件中所有 API 都已经增加了 Nullability 相关修饰符，想了解这个特性的用法，翻几个系统头文件就差不离了。接口中 nullable 的是少数，所以为了防止写一大堆 nonnull，Foundation 还提供了一对儿宏，包在里面的对象默认加 nonnull 修饰符，只需要把 nullable 的指出来就行，黑话叫 Audited Regions：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>) <span class="built_in">NSString</span> *workingCompany;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span> *friends;</div><div class="line">- (<span class="keyword">nullable</span> <span class="built_in">NSString</span> *)gayFriend;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Sark</span> : <span class="title">NSObject</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>, nullable) <span class="built_in">NSString</span> *workingCompany;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span> *friends;</span><br><span class="line">- (nullable <span class="built_in">NSString</span> *)gayFriend;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></span><br></pre></td></tr></table></figure>
 <p>Nullability 在编译器层面提供了空值的类型检查，在类型不符时给出 warning，方便开发者第一时间发现潜在问题。不过我想更大的意义在于能够更加清楚的描述接口，是主调者和被调者间的一个协议，比多少句文档描述都来得清晰，打个比方：</p>
 <pre><code>+ (<span class="tag">nullable</span> <span class="tag">instancetype</span>)<span class="tag">URLWithString</span><span class="pseudo">:(NSString</span> *)<span class="tag">URLString</span>;
 </code></pre><p>NSURL 的这个 API 前面加了 nullable 后，更加显式的指出了这个接口可能因为 URLString 的格式错误而创建失败，使用时自然而然的就考虑到了判空处理。<br>不仅是属性和方法中的对象，对于局部的对象、甚至 c 指针都可以用带双下划线的修饰符，可以理解成能用 const 关键字的地方都能用 Nullability。<br>所以 Nullability 总的来说就是，写着丑B，用着舒服 - -</p>
@@ -210,13 +33,13 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
 <span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSURL</span> *&gt; *imageURLs;
 </code></pre><p>不用多想就清楚下面的数组中存的是什么，避免了 NSString 和 NSURL 的混乱。</p>
 <h1 id="自定义泛型类">自定义泛型类</h1><p>比起使用系统的泛型容器，更好玩的是自定义一个泛型类，目前这里还没什么文档，但拦不住我们写测试代码，假设我们要自定义一个 Stack 容器类：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Stack</span>&lt;<span class="title">ObjectType</span>&gt; : <span class="title">NSObject</span></span></div><div class="line">- (<span class="keyword">void</span>)pushObject:(ObjectType)object;</div><div class="line">- (ObjectType)popObject;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;ObjectType&gt; *allObjects;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Stack</span>&lt;<span class="title">ObjectType</span>&gt; : <span class="title">NSObject</span></span></span><br><span class="line">- (<span class="keyword">void</span>)pushObject:(ObjectType)object;</span><br><span class="line">- (ObjectType)popObject;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">NSArray</span>&lt;ObjectType&gt; *allObjects;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>这个 <code>ObjectType</code> 是传入类型的 placeholder，它只能在 @interface 上定义（类声明、类扩展、Category），如果你喜欢用 T 表示也 ok，这个类型在 @interface 和 @end 区间的作用域有效，可以把它作为入参、出参、甚至内部 NSArray 属性的泛型类型，应该说一切都是符合预期的。我们还可以给 ObjectType 增加类型限制，比如：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 只接受 NSNumber * 的泛型</span></div><div class="line"><span class="variable">@interface</span> Stack&lt;<span class="attribute">ObjectType</span>: NSNumber *&gt; : NSObject</div><div class="line"><span class="comment">// 只接受满足 NSCopying 协议的泛型</span></div><div class="line"><span class="variable">@interface</span> Stack&lt;<span class="attribute">ObjectType</span>: id&lt;NSCopying&gt;&gt; : NSObject</div></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只接受 NSNumber * 的泛型</span></span><br><span class="line"><span class="variable">@interface</span> Stack&lt;<span class="attribute">ObjectType</span>: NSNumber *&gt; : NSObject</span><br><span class="line"><span class="comment">// 只接受满足 NSCopying 协议的泛型</span></span><br><span class="line"><span class="variable">@interface</span> Stack&lt;<span class="attribute">ObjectType</span>: id&lt;NSCopying&gt;&gt; : NSObject</span><br></pre></td></tr></table></figure>
 <p>若什么都不加，表示接受任意类型 ( id )；当类型不满足时编译器将产生 error。<br>实例化一个 Stack，一切工作正常：<br><img src="http://ww4.sinaimg.cn/large/51530583jw1et2eqtxt07j20n6040wft.jpg" alt="我是图"></p>
 <p>对于多参数的泛型，用逗号隔开，其他都一样，可以参考 NSDictionary 的头文件。</p>
 <h1 id="协变性和逆变性">协变性和逆变性</h1><p>当类支持泛型后，它们的 Type 发生了变化，比如下面三个对象看上去都是 Stack，但实际上属于三个 Type：</p>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Stack</span> *<span class="built_in">stack</span>; <span class="comment">// Stack *</span></div><div class="line"><span class="built_in">Stack</span>&lt;NSString *&gt; *stringStack; <span class="comment">// Stack&lt;NSString *&gt;</span></div><div class="line"><span class="built_in">Stack</span>&lt;NSMutableString *&gt; *mutableStringStack; <span class="comment">// Stack&lt;NSMutableString *&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Stack <span class="keyword">*</span>stack; // Stack <span class="keyword">*</span></span><br><span class="line">Stack<span class="variable">&lt;NSString *&gt;</span> <span class="keyword">*</span>stringStack; // Stack<span class="variable">&lt;NSString *&gt;</span></span><br><span class="line">Stack<span class="variable">&lt;NSMutableString *&gt;</span> <span class="keyword">*</span>mutableStringStack; // Stack<span class="variable">&lt;NSMutableString *&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当其中两种类型做类型转化时，编译器需要知道哪些转化是允许的，哪些是禁止的，比如，默认情况下：</p>
 <p><img src="http://ww3.sinaimg.cn/large/51530583jw1et2fajoo7bj210o09y78w.jpg" alt="我是图"></p>
 <p>我们可以看到，不指定泛型类型的 Stack 可以和任意泛型类型转化，但指定了泛型类型后，两个不同类型间是不可以强转的，假如你希望主动控制转化关系，就需要使用泛型的协变性和逆变性修饰符了：</p>
@@ -242,254 +65,15 @@ Overview自 WWDC 2015 推出和开源 Swift 2.0 后，大家对 Swift 的热情�
 <p>最后，附上一段用上了所有新特性的代码，Swift 是发展趋势，如果你暂时依然要写 Objective-C 代码，把所有新特性都用上，或许能让你到新语言的迁移更无痛一点。</p>
 <p><img src="http://ww2.sinaimg.cn/large/51530583jw1et2iirmu7bj20ze0bojvm.jpg" alt="我是图"></p>
 <h1 id="References">References</h1><p><a href="https://msdn.microsoft.com/zh-cn/library/dd799517.aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/dd799517.aspx</a><br><a href="https://gist.github.com/jtbandes/881f07a955ff2eadd1a0" target="_blank" rel="external">https://gist.github.com/jtbandes/881f07a955ff2eadd1a0</a></p>
+</div></article></div></section><footer><div class="paginator"><a href="/2015/11/09/ios-nsurlprotocol/" class="prev"><button class="ui button teal">上一篇</button></a><a href="/2015/11/04/nstimer-not-release/" class="next"><button class="ui button teal">下一篇</button></a></div><div data-thread-key="2015/11/05/Objc-2015/" data-title="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)" data-url="http://yoursite.com/2015/11/05/Objc-2015/" class="ds-share"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><span class="ds-more">分享到：</span></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul></div></div><div data-thread-key="2015/11/05/Objc-2015/" data-title="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)" data-url="http://yoursite.com/2015/11/05/Objc-2015/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"littlewin"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
 
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      <a href="/2015/11/05/Objc-2015/" class="archive-article-date">
-  	<time datetime="2015-11-05T02:45:36.000Z" itemprop="datePublished"><i class="icon-clock"></i>2015-11-05</time>
-</a>
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Objc/">Objc</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<i class="icon-price-tags"></i>
-	<a class="article-category-link" href="/categories/技术文章/">技术文章</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2015/11/09/ios-nsurlprotocol/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          NSUrlProtocol使用
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/11/04/nstimer-not-release/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">(坑)NSTimer会持有对象导致循环引用</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-
-
-<div class="share_jia">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">Share to: &nbsp; </span>
-		<a class="jiathis_button_facebook"></a> 
-	    <a class="jiathis_button_twitter"></a>
-	    <a class="jiathis_button_plus"></a> 
-	    <a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-
-
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Objc-2015" data-title="Objective-C 2015新改动(终于知道啥叫泛型了＝。＝)" data-url="http://yoursite.com/2015/11/05/Objc-2015/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
-
-
-
-      </div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2017 Rick
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-      	</div>
-    </div>
-  </div>
-</footer>
-    </div>
-    <script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: false,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false,
-		root: "/",
-		innerArchive: true
-	}
-</script>
-
-<script src="/./main.js"></script>
-
-
-    
-<div class="tools-col">
-  <ul class="btn-wrap">
-    
-      <li class="chose" data-hook="tools-section-all"><span class="text">全部</span><i class="icon-book"></i></li>
-    
-    
-      <li data-hook="tools-section-tag"><span class="text">标签</span><i class="icon-price-tags"></i></li>
-    
-    
-      <li data-hook="tools-section-friends"><span class="text">友链</span><i class="icon-link"></i></li>
-    
-    
-      <li data-hook="tools-section-me"><span class="text">我</span><i class="icon-smile"></i></li>
-    
-  </ul>
-  <div class="tools-wrap">
-    
-    	<section class="tools-section tools-section-all chose">
-    	</section>
-    
-
-    
-    	<section class="tools-section tools-section-tag">
-    			<div class="widget tagcloud" id="js-tagcloud">
-    				<a href="/tags/ARC/" style="font-size: 15px;">ARC</a> <a href="/tags/NSDate/" style="font-size: 10px;">NSDate</a> <a href="/tags/NSUrlProtocol/" style="font-size: 10px;">NSUrlProtocol</a> <a href="/tags/Objc/" style="font-size: 10px;">Objc</a> <a href="/tags/Xcode8/" style="font-size: 10px;">Xcode8</a> <a href="/tags/checkBox/" style="font-size: 10px;">checkBox</a> <a href="/tags/ios-dns/" style="font-size: 10px;">ios-dns</a> <a href="/tags/json/" style="font-size: 10px;">json</a> <a href="/tags/navigation/" style="font-size: 20px;">navigation</a> <a href="/tags/tableView/" style="font-size: 10px;">tableView</a> <a href="/tags/xib/" style="font-size: 10px;">xib</a> <a href="/tags/循环引用/" style="font-size: 10px;">循环引用</a> <a href="/tags/插件/" style="font-size: 10px;">插件</a> <a href="/tags/测试/" style="font-size: 10px;">测试</a> <a href="/tags/面试/" style="font-size: 15px;">面试</a>
-    			</div>
-    	</section>
-    
-
-    
-    	<section class="tools-section tools-section-friends">
-  		
-  			<div class="friends-wrap" id="js-friends">
-  			
-  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://objccn.io/">objc中国</a>
-  	        
-  	          <a target="_blank" class="main-nav-link switch-friends-link" href="http://github.ibireme.com/github/list/ios/#">某神github备忘</a>
-  	        
-  	        </div>
-  		
-    	</section>
-    
-
-    
-    	<section class="tools-section tools-section-me">
-  	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">iOS小菜一枚</div>
-  	  	
-    	</section>
-    
-  </div>
-  
-</div>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-  </div>
-</body>
-</html>
+</script><div class="copyright"><p>© 2016 - 2017 <a href="http://yoursite.com">Rick</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and theme by <a href="https://github.com/littlewin-wang/hexo-theme-casual" target="_blank">casual</a></p></div></footer></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script><script src="/js/jquery.goup.min.js"></script><script src="/js/semantic.min.js"></script><script src="/js/casual.js"></script><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>$(document).ready(function(){$.goup({trigger:100,bottomOffset:100,locationOffset:5,title:'',titleAsText:true});});</script><script>(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+_st('install','TvAnFS4AVxjiJUvrZJRB','2.0.0');</script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></div></body></html>

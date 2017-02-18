@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-02-14T09:40:13.000Z</updated>
+  <updated>2017-02-18T08:11:28.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS网页离线缓存的几种方法</title>
+    <link href="http://yoursite.com/2017/02/18/redirect-local-resource-using-NSURLProtocol/"/>
+    <id>http://yoursite.com/2017/02/18/redirect-local-resource-using-NSURLProtocol/</id>
+    <published>2017-02-18T03:53:15.000Z</published>
+    <updated>2017-02-18T08:11:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>项目里有个需求：因为推出的页游资源文件较大，需要把资源文件放在本地</p>
+<p>网上已经有几种实现方案了：</p>
+<p>调用<code>UIWebView</code>的<code>(void)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;</code></p>
+<p><a href="http://blog.csdn.net/zachman1993/article/details/52693826" target="_blank" rel="external">http://blog.csdn.net/zachman1993/article/details/52693826</a></p>
+<p>使用<code>NSURLCache</code></p>
+<p><a href="http://www.jianshu.com/p/7f3be7c30c77" target="_blank" rel="external">http://www.jianshu.com/p/7f3be7c30c77</a></p>
+<p>这里主要介绍下我用<code>NSURLProtocol</code>的实现版本</p>
+<p><code>NSURLProcol</code>是 URL Loading System的重要组成部分，它可以拦截、转发App所发出的网络请求，具体介绍可以看<a href="https://www.devrick.cn/2015/11/09/ios-nsurlprotocol/" target="_blank" rel="external">这篇文章</a></p>
+<p>实现步骤很简单，只需要创建一个NSURLProtocol的子类，并重写<code>startLoading</code>这个方法，为需要转发的<code>NSURLRequest</code>生成一个<code>NSURLResponse</code>就可以了</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)startLoading</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    [<span class="built_in">NSURLProtocol</span> setProperty:@YES forKey:URLProtocolHandledKey inRequest:(<span class="built_in">NSMutableURLRequest</span> *)[<span class="keyword">self</span> request]];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSMutableURLRequest</span> *mutableReqeust = [[<span class="keyword">self</span> request] mutableCopy];</span><br><span class="line">    mutableReqeust = [<span class="keyword">self</span> redirectHostInRequset:mutableReqeust];   <span class="comment">//处理url</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ([mutableReqeust<span class="variable">.URL</span><span class="variable">.scheme</span> isEqualToString:<span class="string">@"file"</span>]) &#123;<span class="comment">// 需要转发的URL是file://开头的</span></span><br><span class="line">        <span class="built_in">NSData</span> *data = [<span class="built_in">NSData</span> dataWithContentsOfURL:mutableReqeust<span class="variable">.URL</span>];<span class="comment">//本地数据</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSString</span> *path = mutableReqeust<span class="variable">.URL</span><span class="variable">.absoluteString</span>;</span><br><span class="line">        path = [path stringByReplacingOccurrencesOfString:<span class="string">@"file://"</span> withString:<span class="string">@""</span>];</span><br><span class="line">        <span class="built_in">NSString</span> *mimeType = [<span class="keyword">self</span> getMIMETypeWith<span class="built_in">CAPIAtFilePath</span>:path];	<span class="comment">//mimeType</span></span><br><span class="line">      <span class="comment">//生成response</span></span><br><span class="line">        <span class="built_in">NSURLResponse</span> *response = [[<span class="built_in">NSURLResponse</span> alloc] initWithURL:[<span class="keyword">self</span> request]<span class="variable">.URL</span></span><br><span class="line">                                                            MIMEType:mimeType</span><br><span class="line">                                               expectedContentLength:data<span class="variable">.length</span></span><br><span class="line">                                                    textEncodingName:<span class="literal">nil</span>];</span><br><span class="line">      <span class="comment">//转发</span></span><br><span class="line">        [<span class="keyword">self</span><span class="variable">.client</span> URLProtocol:<span class="keyword">self</span></span><br><span class="line">              didReceiveResponse:response</span><br><span class="line">              cacheStoragePolicy:<span class="built_in">NSURLCacheStorageNotAllowed</span>];</span><br><span class="line">        </span><br><span class="line">        [<span class="keyword">self</span><span class="variable">.client</span> URLProtocol:<span class="keyword">self</span> didLoadData:data];</span><br><span class="line">        [<span class="keyword">self</span><span class="variable">.client</span> URLProtocolDidFinishLoading:<span class="keyword">self</span>];</span><br><span class="line"></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;	<span class="comment">//不需要转发的URL走默认方法</span></span><br><span class="line">        <span class="keyword">self</span><span class="variable">.connection</span> = [<span class="built_in">NSURLConnection</span> connectionWithRequest:[<span class="keyword">self</span> request] delegate:<span class="keyword">self</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>+(NSMutableURLRequest*)redirectHostInRequset:(NSMutableURLRequest*)request</code></p>
+<p>这个函数是用来重定向URL的，里面放的是业务逻辑，如果改request需要处理，则把url修改成本地对应文件的request；如果不需要处理，则直接返回原URL</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;项目里有个需求：因为推出的页游资源文件较大，需要把资源文件放在本地&lt;/p&gt;
+&lt;p&gt;网上已经有几种实现方案了：&lt;/p&gt;
+&lt;p&gt;调用&lt;code&gt;UIWebView&lt;/code&gt;的&lt;code&gt;(void)loadHTMLString:(NSString *)string base
+    
+    </summary>
+    
+      <category term="技术文章" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/"/>
+    
+    
+      <category term="NSURLProtocol" scheme="http://yoursite.com/tags/NSURLProtocol/"/>
+    
+  </entry>
   
   <entry>
     <title>隐藏UINavigationBar可能会遇到的一个坑</title>

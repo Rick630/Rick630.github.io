@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-22T09:50:46.000Z</updated>
+  <updated>2017-04-22T09:55:59.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,10 +20,11 @@
     <link href="http://yoursite.com/2017/04/22/NSOpreation-musicDownloader/"/>
     <id>http://yoursite.com/2017/04/22/NSOpreation-musicDownloader/</id>
     <published>2017-04-22T08:00:00.000Z</published>
-    <updated>2017-04-22T09:50:46.000Z</updated>
+    <updated>2017-04-22T09:55:59.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近需要开发一个音乐下载的模块，考虑到方便封装和对象化，使用了<code>NSOpreation</code>。</p>
 <p>考虑到复用，我这里使用了继承<code>NSOpreation</code>的方法</p>
+<a id="more"></a>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">YOYMusicDownloadOperation</span> : <span class="title">NSOperation</span></span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="keyword">void</span>(^processBlock)(<span class="keyword">double</span> process);</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="keyword">void</span>(^completeBlock)(<span class="built_in">BOOL</span> r, <span class="built_in">NSURL</span> *localUrl);</span><br><span class="line"></span><br><span class="line">+ (<span class="built_in">NSString</span> *)localMusicFilesPath;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithURL:(<span class="built_in">NSURL</span> *)url processCallback:(<span class="keyword">void</span>(^)(<span class="keyword">double</span> process))process complete:(<span class="keyword">void</span>(^)(<span class="built_in">BOOL</span> finised, <span class="built_in">NSURL</span> *localUrl))complete;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>这个类很简单，两个block属性，一个用于进度监控，一个用于结束回调。</p>
 <p>然后开始重写<code>NSOpreation</code>的两个方法：<code>start</code> 和 <code>main</code></p>
@@ -39,7 +40,6 @@
     
       &lt;p&gt;最近需要开发一个音乐下载的模块，考虑到方便封装和对象化，使用了&lt;code&gt;NSOpreation&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;考虑到复用，我这里使用了继承&lt;code&gt;NSOpreation&lt;/code&gt;的方法&lt;/p&gt;
-&lt;figure class=&quot;highlight ob
     
     </summary>
     

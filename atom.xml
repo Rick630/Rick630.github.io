@@ -109,6 +109,41 @@
   </entry>
   
   <entry>
+    <title>iOS7判断一个NSDate是否是今天/昨天的小办法</title>
+    <link href="http://yoursite.com/2016/09/22/NSOpreation-musicDownloader/"/>
+    <id>http://yoursite.com/2016/09/22/NSOpreation-musicDownloader/</id>
+    <published>2016-09-22T08:00:00.000Z</published>
+    <updated>2017-04-22T09:48:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近需要开发一个音乐下载的模块，考虑到方便封装和对象化，使用了<code>NSOpreation</code>。</p>
+<p>考虑到复用，我这里使用了继承<code>NSOpreation</code>的方法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface YOYMusicDownloadOperation : NSOperation&#10;@property (copy, nonatomic) void(^processBlock)(double process);&#10;@property (copy, nonatomic) void(^completeBlock)(BOOL r, NSURL *localUrl);&#10;&#10;+ (NSString *)localMusicFilesPath;&#10;&#10;- (instancetype)initWithURL:(NSURL *)url processCallback:(void(^)(double process))process complete:(void(^)(BOOL finised, NSURL *localUrl))complete;&#10;&#10;@end</span><br></pre></td></tr></table></figure>
+<p>这个类很简单，两个block属性，一个用于进度监控，一个用于结束回调。</p>
+<p>然后开始重写<code>NSOpreation</code>的两个方法：<code>start</code> 和 <code>main</code></p>
+<p>因为是下载需要异步回调，所以在函数<code>main</code>里使用了死循环，等下载完成后再结束线程。（如果线程结束，这个opreation会被释放）。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (void)start&#10;&#123;&#10;    if ([self isCancelled])&#123;&#10;&#10;        [self willChangeValueForKey:@&#34;isFinished&#34;];&#10;        finished = YES;&#10;        [self didChangeValueForKey:@&#34;isFinished&#34;];&#10;        &#10;        return;&#10;    &#125; else &#123;&#10;&#10;        [self willChangeValueForKey:@&#34;isExecuting&#34;];&#10;        executing = YES;&#10;        [self main];&#10;        [self didChangeValueForKey:@&#34;isExecuting&#34;];&#10;    &#125;&#10;&#125;&#10;&#10;- (void)main&#10;&#123;&#10;    _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[[NSOperationQueue alloc] init]];&#10;    NSURLRequest *req = [NSURLRequest requestWithURL:self.downloadUrl];&#10;    _task = [_session downloadTaskWithRequest:req];&#10;    &#10;    [_task resume];&#10;    &#10;    while(_task != nil) &#123;&#10;        &#10;        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];&#10;        &#10;    &#125;&#10;    &#10;    [self willChangeValueForKey:@&#34;isFinished&#34;];&#10;    [self willChangeValueForKey:@&#34;isExecuting&#34;];&#10;    finished = YES;&#10;    executing = NO;&#10;    [self didChangeValueForKey:@&#34;isFinished&#34;];&#10;    [self didChangeValueForKey:@&#34;isExecuting&#34;];&#10;&#125;&#10;- (BOOL) isFinished&#123;&#10;    return(finished);&#10;&#125;&#10;&#10;- (BOOL) isExecuting&#123;&#10;    return(executing);&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong> 在重写<code>NSOpreation</code>时，注意也要重写 <code>isFinished</code>和<code>isExecuting</code>这两个属性的getter，同时还需要手动触发相关的KVO。如果没重写这两个方法，<code>isFinished</code>和<code>isExecuting</code>这两个属性会一直是NO，导致在线程完成后还留在<code>NSOpreationQueue里</code>，不会移除。</p>
+<p>然后实现NSURLSession的几个代理方法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location&#123;&#10;&#10;    _musicLocation = location;&#10;&#125;&#10;-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error&#123;&#10;&#10;    if(!error)&#123;&#10;        dispatch_sync_on_main_queue(^&#123;&#10;            if(self.completeBlock)&#10;            &#123;&#10;                if(_musicLocation)&#10;                &#123;&#10;                    self.completeBlock(YES, _musicLocation);&#10;                &#125;&#10;                else&#10;                &#123;&#10;                    self.completeBlock(NO, nil);&#10;                &#125;&#10;            &#125;&#10;        &#125;);&#10;    &#125;&#10;    &#10;    _task = nil;&#10;&#125;&#10;-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite&#123;&#10;    double process = totalBytesWritten/(double)totalBytesExpectedToWrite;&#10;    &#10;    if(self.processBlock)&#10;    &#123;&#10;        self.processBlock(process);&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>特别说明下，因为下载完成后需要刷新UI，我选择了在主线程调用<code>completeBlock</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近需要开发一个音乐下载的模块，考虑到方便封装和对象化，使用了&lt;code&gt;NSOpreation&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;考虑到复用，我这里使用了继承&lt;code&gt;NSOpreation&lt;/code&gt;的方法&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="技术文章" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/"/>
+    
+    
+      <category term="NSDate" scheme="http://yoursite.com/tags/NSDate/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Xcode8更新xib版本后遇到的frame问题和解决办法</title>
     <link href="http://yoursite.com/2016/09/21/Xcode8_xib_issue/"/>
     <id>http://yoursite.com/2016/09/21/Xcode8_xib_issue/</id>
